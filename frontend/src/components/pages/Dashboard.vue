@@ -98,7 +98,7 @@
 	}
 
 	.tasks p {
-		font-size: 5rem;
+		font-size: 4rem;
 		margin: 0;
 		font-weight: 700;
 		color: white;
