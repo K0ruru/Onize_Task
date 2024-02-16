@@ -3,7 +3,7 @@ import Login from "./components/pages/Login.vue";
 // import Dashboard from "./components/pages/Dashboard.vue";
 
 // pages
-// pages goes here
+import Dashboard from "./components/pages/Dashboard.vue";
 
 const routes = [
 	{
@@ -11,14 +11,14 @@ const routes = [
 		component: Login,
 		name: "Login",
 	},
-	// {
-	// 	path: "/",
-	// 	component: Dashboard,
-	// 	name: "Dashboard",
-	// 	meta: {
-	// 		requiresAuth: true,
-	// 	},
-	// },
+	{
+		path: "/",
+		component: Dashboard,
+		name: "Dashboard",
+		// meta: {
+		// 	requiresAuth: true,
+		// },
+	},
 ];
 
 const router = createRouter({
