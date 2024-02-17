@@ -32,7 +32,11 @@ const cities = [
       <p>{{ currentDate.toLocaleString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }) }}</p>
       <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Week"
         class="w-full md:w-14rem" />
-      <i class="pi pi-tag"></i>Filter
+
+      <div class="filter">
+        <i class="pi pi-tag"></i>Filter
+      </div>
+
     </div>
     <div class="right-nav">
       <i class="pi pi-circle-fill"></i>
@@ -41,6 +45,12 @@ const cities = [
 </template>
 
 <style scoped>
+.filter {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+}
 .nav-top {
   display: flex;
   justify-content: space-between;

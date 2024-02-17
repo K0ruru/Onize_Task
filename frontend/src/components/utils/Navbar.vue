@@ -21,10 +21,13 @@
 <template>
 	<div class="nav-container">
 		<nav class="side-nav" :class="{ collapsed: isCollapsed }">
-			<div class="logo" @click="handleCollapse">
-				<img src="../../assets/Onize.png" alt="Logo" />
-			</div>
+			<!-- <div class="logo" @click="handleCollapse"> -->
+			<!-- 	<img src="../../assets/Onize.png" alt="Logo" /> -->
+			<!-- </div> -->
 			<div class="nav-items">
+			<div class="logo" @click="handleCollapse">
+				<img src="../../assets/Ozine.png" alt="Logo" />
+			</div>
 				<router-link to="/Dashboard" style="text-decoration: none">
 					<i class="pi pi-home"></i>
 					<span>Overview</span>
@@ -70,21 +73,21 @@
 	}
 
 	.logo {
-		filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(180deg);
-		text-align: center;
-		margin-bottom: 20px;
+		/* text-align: center; */
+		margin-bottom: 17px;
 		cursor: pointer;
 		/* background-color: white; */
 		max-width: fit-content;
-		/* justify-self: center; */
-		/* align-self: center; */
-		padding: 5px;
+		justify-self: center;
+		align-self: left;
 		border-radius: 7px;
-		margin-left: 22px;
+		/* margin-left: 22px; */
 	}
 
 	.logo img {
 		width: 30px;
+    margin-right: 0;
+    padding: 0;
 	}
 
 	.nav-items {
