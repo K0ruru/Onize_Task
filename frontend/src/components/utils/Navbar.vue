@@ -10,6 +10,8 @@ const handleCollapse = () => {
 };
 </script>
 
+
+
 <template>
   <div class="nav-container">
     <nav class="side-nav" :class="{ collapsed: isCollapsed }">
