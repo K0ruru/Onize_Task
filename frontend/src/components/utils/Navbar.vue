@@ -5,6 +5,7 @@ import { defineProps, defineEmits } from "vue";
 const { isCollapsed } = defineProps(["isCollapsed"]);
 const emit = defineEmits();
 
+
 const handleCollapse = () => {
   emit("toggleCollapse");
 };
