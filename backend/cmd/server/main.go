@@ -11,6 +11,7 @@ import (
 	"github.com/go-ozzo/ozzo-routing/v2/cors"
 	_ "github.com/lib/pq"
 	"github.com/qiangxue/go-rest-api/internal/album"
+  "github.com/qiangxue/go-rest-api/internal/user"
 	"github.com/qiangxue/go-rest-api/internal/auth"
 	"github.com/qiangxue/go-rest-api/internal/config"
 	"github.com/qiangxue/go-rest-api/internal/errors"
@@ -70,7 +71,6 @@ func main() {
 	}
 }
 
-// buildHandler sets up the HTTP routing and builds an HTTP handler.
 func buildHandler(logger log.Logger, db *dbcontext.DB, cfg *config.Config) http.Handler {
 	router := routing.New()
 
@@ -85,16 +85,24 @@ func buildHandler(logger log.Logger, db *dbcontext.DB, cfg *config.Config) http.
 
 	rg := router.Group("/v1")
 
+	// Create an instance of your repository
+	authRepo := auth.NewRepository(db, logger)
 	authHandler := auth.Handler(cfg.JWTSigningKey)
+
+	// Pass the authRepo instance when initializing the authentication service
+	auth.RegisterHandlers(rg.Group(""),
+		auth.NewService(authRepo, cfg.JWTSigningKey, cfg.JWTExpiration, logger),
+		logger,
+	)
+
+	user.RegisterHandlers(rg.Group(""),
+		user.NewService(user.NewRepository(db, logger), logger),
+		authHandler, logger,
+	)
 
 	album.RegisterHandlers(rg.Group(""),
 		album.NewService(album.NewRepository(db, logger), logger),
 		authHandler, logger,
-	)
-
-	auth.RegisterHandlers(rg.Group(""),
-		auth.NewService(cfg.JWTSigningKey, cfg.JWTExpiration, logger),
-		logger,
 	)
 
 	return router

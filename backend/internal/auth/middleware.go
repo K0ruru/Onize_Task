@@ -34,13 +34,13 @@ const (
 
 // WithUser returns a context that contains the user identity from the given JWT.
 func WithUser(ctx context.Context, id, name string) context.Context {
-	return context.WithValue(ctx, userKey, entity.User{ID: id, Name: name})
+	return context.WithValue(ctx, userKey, entity.Users{ID: id, Name: name})
 }
 
 // CurrentUser returns the user identity from the given context.
 // Nil is returned if no user identity is found in the context.
 func CurrentUser(ctx context.Context) Identity {
-	if user, ok := ctx.Value(userKey).(entity.User); ok {
+	if user, ok := ctx.Value(userKey).(entity.Users); ok {
 		return user
 	}
 	return nil
