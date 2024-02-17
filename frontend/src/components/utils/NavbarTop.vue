@@ -5,6 +5,7 @@ import { ref, onMounted } from "vue";
 
 
 
+// ngambil date
 const currentDate = ref(new Date());
 onMounted(() => {
   // Update the current date every second
