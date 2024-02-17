@@ -5,6 +5,13 @@ import "primeicons/primeicons.css";
 import 'primeicons/primeicons.css';
 import Checkbox from 'primevue/checkbox';
 import NavbarTop from "../utils/NavbarTop.vue"
+import AddTaskForm from "../utils/AddTaskForm.vue"
+const showAddTaskForm = ref(false);
+
+const showAddTaskFormModal = () => {
+  showAddTaskForm.value = !showAddTaskForm.value;
+};
+
 
 const isCollapsed = ref(false);
 const toggleCollapse = () => {
@@ -15,6 +22,7 @@ const toggleCollapse = () => {
 </script>
 
 <template>
+   <AddTaskForm v-if="showAddTaskForm" />
   <div class="container" :class="{ 'collapsed-container': isCollapsed }">
     <Navbar :isCollapsed="isCollapsed" @toggleCollapse="toggleCollapse" />
     <div class="dashboard-content">
@@ -55,7 +63,7 @@ const toggleCollapse = () => {
       <!--   </Card> -->
       <!-- </div> -->
 
-      <div class="task-container">
+      <div class="task-container" @click="showAddTaskFormModal">
         <div class="task">
           <div class="top-task">
             <div class="task-checklist">
