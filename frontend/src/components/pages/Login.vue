@@ -6,9 +6,12 @@
 	// plugins
 	import InputText from "primevue/inputtext";
 	import Password from "primevue/password";
+	import Toast from "primevue/toast";
+	import { useToast } from "primevue/usetoast";
 
 	// plugins
 	const router = useRouter();
+	const toast = useToast();
 
 	// refs
 	const Email = ref("");
@@ -30,7 +33,16 @@
 				console.error("Token not received in the response");
 			}
 		} catch (err) {
-			console.error(err);
+			if (err.response && err.response.status === 401) {
+				toast.add({
+					severity: "error",
+					summary: "Invalid",
+					detail: "Email or Passphrase are invalid :(",
+					life: 3000,
+				});
+			} else {
+				console.error(err);
+			}
 		}
 	};
 </script>
@@ -59,6 +71,8 @@
 							:feedback="false"
 						/>
 					</div>
+
+					<Toast />
 
 					<a href="#">Don't have an account? <span>Signup</span></a>
 					<button>Log In</button>
