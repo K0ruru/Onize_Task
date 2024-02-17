@@ -27,7 +27,22 @@ const emits = defineEmits(["closeAddForm"]);
           <textarea></textarea>
         </div>
 
+        <div class="start-due">
+          <div class="start">
+            <p>Start Date</p>
+            <input type="date">
+          </div>
 
+          <div class="due">
+            <p>Due Date</p>
+            <input type="date">
+          </div>
+        </div>
+      </div>
+
+      <div class="button-form">
+        <button>Cencel</button>
+        <button>Save</button>
       </div>
 
     </div>
@@ -35,10 +50,33 @@ const emits = defineEmits(["closeAddForm"]);
 </template>
 
 <style scoped>
+.button-form {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 1.5rem;
+  gap: 1rem;
+}
+
+.button-form button {
+  width: 20%;
+  background: #6427aa;
+  border: none;
+  padding: 4px 5px;
+  border-radius: 5px;
+}
+
+.start-due {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
 .form-container {
   width: 100%;
   padding: 1.5rem;
 }
+
 .form-header {
   display: flex;
   align-items: center;
@@ -47,6 +85,10 @@ const emits = defineEmits(["closeAddForm"]);
   width: 100%;
   height: 70px;
   padding: 1.5rem;
+}
+
+.name-input {
+  width: 100%;
 }
 
 .form-header h1 {
