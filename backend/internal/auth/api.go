@@ -1,6 +1,8 @@
 package auth
 
 import (
+	"net/http"
+
 	routing "github.com/go-ozzo/ozzo-routing/v2"
 	"github.com/qiangxue/go-rest-api/internal/errors"
 	"github.com/qiangxue/go-rest-api/pkg/log"
@@ -8,23 +10,33 @@ import (
 
 // RegisterHandlers registers handlers for different HTTP requests.
 func RegisterHandlers(rg *routing.RouteGroup, service Service, logger log.Logger) {
+	res := resource{service, logger}
 	rg.Post("/login", login(service, logger))
+	rg.Post("/signup", res.signup)
+}
+
+type resource struct {
+	service Service
+	logger log.Logger
 }
 
 // login returns a handler that handles user login request.
 func login(service Service, logger log.Logger) routing.Handler {
 	return func(c *routing.Context) error {
-		var req struct {
-			Username string `json:"username"`
-			Password string `json:"password"`
-		}
+		var input CreateUser
 
-		if err := c.Read(&req); err != nil {
+		if err := c.Read(&input); err != nil {
 			logger.With(c.Request.Context()).Errorf("invalid request: %v", err)
 			return errors.BadRequest("")
 		}
 
-		token, err := service.Login(c.Request.Context(), req.Username, req.Password)
+		// Create a LoginUser object from CreateUser
+		loginUser := LoginUser{
+			Email:      input.Email,
+			Passphrase: input.Passphrase,
+		}
+
+		token, err := service.Login(c.Request.Context(), loginUser)
 		if err != nil {
 			return err
 		}
@@ -33,3 +45,19 @@ func login(service Service, logger log.Logger) routing.Handler {
 		}{token})
 	}
 }
+
+func (r resource) signup(c *routing.Context) error {
+	var input CreateUser
+	if err := c.Read(&input); err != nil {
+		r.logger.With(c.Request.Context()).Info(err)
+		return errors.BadRequest("")
+	}
+
+	user, err := r.service.SignUp(c.Request.Context(), input)
+	if err != nil {
+		return err
+	}
+
+	return c.WriteWithStatus(user, http.StatusCreated)
+}
+
