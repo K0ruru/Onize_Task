@@ -19,10 +19,10 @@ const handleCollapse = () => {
       <div class="nav-items">
         <router-link to="/Dashboard" style="text-decoration: none">
           <i class="pi pi-home"></i>
-          <span>Dashboard</span>
+          <span>Overview</span>
         </router-link>
         <router-link to="/Dashboard" style="text-decoration: none">
-          <i class="pi pi-book"></i>
+          <i class="pi pi-check-circle"></i>
           <span>Tasks</span>
         </router-link>
         <router-link to="/Dashboard" style="text-decoration: none">
