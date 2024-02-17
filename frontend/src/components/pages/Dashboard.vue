@@ -6,7 +6,6 @@ import 'primeicons/primeicons.css';
 import Checkbox from 'primevue/checkbox';
 import NavbarTop from "../utils/NavbarTop.vue"
 
-
 const isCollapsed = ref(false);
 const toggleCollapse = () => {
   isCollapsed.value = !isCollapsed.value;
