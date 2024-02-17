@@ -11,16 +11,12 @@ import (
 	"github.com/qiangxue/go-rest-api/pkg/log"
 )
 
-// Service encapsulates the authentication logic.
 type Service interface {
-	// authenticate authenticates a user using username and password.
-	// It returns a JWT token if authentication succeeds. Otherwise, an error is returned.
 	Login(ctx context.Context, input LoginUser) (string, error)
 
 	SignUp(ctx context.Context, input CreateUser) (string, error)
 }
 
-// Identity represents an authenticated user identity.
 type User struct {
 	entity.User
 }
@@ -51,12 +47,10 @@ func (cu CreateUser) Validate() error {
 	)
 }
 
-// NewService creates a new authentication service.
 func NewService(signingKey string, tokenExpiration int, logger log.Logger, repo Repository) Service {
 	return &service{signingKey, tokenExpiration, logger, repo}
 }
 
-// SignUp implements Service.
 func (s *service) SignUp(ctx context.Context, req CreateUser) (string, error) {
 	if err := req.Validate(); err != nil {
 		return "", err
@@ -80,12 +74,9 @@ func (s *service) SignUp(ctx context.Context, req CreateUser) (string, error) {
 	}})
 }
 
-// Login authenticates a user and generates a JWT token if authentication succeeds.
-// Otherwise, an error is returned.
 func (s *service) Login(ctx context.Context, loginReq LoginUser) (string, error) {
 	user, err := s.authenticate(ctx, loginReq)
 	if err != nil {
-		// Handle the error, for example, return an empty token or log the error.
 		s.logger.Error("Authentication failed", "error", err)
 		return "", errors.Unauthorized("authentication failed")
 	}
@@ -96,7 +87,6 @@ func (s *service) Login(ctx context.Context, loginReq LoginUser) (string, error)
 func (s *service) authenticate(ctx context.Context, loginReq LoginUser) (User, error) {
 	user, err := s.repo.GetByEmailAndPassword(ctx, loginReq.Email, loginReq.Passphrase)
 	if err != nil {
-		// Handle the error, for example, return an empty user or log the error.
 		s.logger.Error("Authentication failed", "error", err)
 		return User{}, errors.Unauthorized("authentication failed")
 	}
@@ -104,11 +94,6 @@ func (s *service) authenticate(ctx context.Context, loginReq LoginUser) (User, e
 	return User{User: user}, nil
 }
 
-
-
-
-
-// generateJWT generates a JWT that encodes an identity.
 func (s service) generateJWT(user User) (string, error) {
 	return jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"id":   user.ID,
