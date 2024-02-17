@@ -57,6 +57,7 @@ const cities = [
   width: 100%;
   border-bottom: 1px solid #222;
   padding: 1.7%;
+  align-items: center;
 }
 
 .left-nav {
@@ -67,6 +68,7 @@ const cities = [
 
 .right-nav {
   color: #6427aa;
+  padding-right: 15px;
 }
 </style>
 

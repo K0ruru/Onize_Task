@@ -1,4 +1,7 @@
 <script setup>
+import InputText from 'primevue/inputtext';
+import Editor from 'primevue/editor';
+import Calendar from 'primevue/calendar';
 const emits = defineEmits(["closeAddForm"]);
 
 </script>
@@ -17,17 +20,34 @@ const emits = defineEmits(["closeAddForm"]);
       <div class="form-container">
         <!-- nama div -->
         <div class="name-input">
-          <p>Task Name</p>
-          <input type="text">
+          <label for="taskname">Task Name</label>
+          <InputText id="taskname" type="text" v-model="value" />
         </div>
 
         <!-- deskripsi div -->
         <div class="description-input">
-          <p>Description</p>
-          <textarea></textarea>
+          <label for="description">Description</label>
+          <Editor id="description" v-model="value" editorStyle="height: 320px" />
         </div>
 
+        <div class="start-due">
+          <div class="start">
+            <label for="start">Start</label>
+            <!-- <input type="date"> -->
+            <Calendar v-model="date" />
+          </div>
 
+          <div class="due">
+          <label for="due">Due</label>
+            <!-- <input type="date"> -->
+            <Calendar v-model="date" />
+          </div>
+        </div>
+      </div>
+
+      <div class="button-form">
+        <button class="button-cencel">Cencel</button>
+        <button class="button-save">Save</button>
       </div>
 
     </div>
@@ -35,10 +55,60 @@ const emits = defineEmits(["closeAddForm"]);
 </template>
 
 <style scoped>
-.form-container {
+.button-form {
+  display: flex;
+  justify-content: flex-end;
   width: 100%;
   padding: 1.5rem;
+  gap: 1rem;
 }
+
+.button-form .button-save {
+  width: 20%;
+  background: #6427aa;
+  border: none;
+  padding: 10px 5px;
+  border-radius: 5px;
+}
+.button-form .button-cencel {
+  width: 20%;
+  background: #0a0b0a;
+  border: 1px solid #6427aa;
+  padding: 10px 5px;
+  border-radius: 5px;
+}
+
+.start-due {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem 0rem;
+}
+
+.start {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.due {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.form-container {
+  width: 100%;
+  padding: 0rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
 .form-header {
   display: flex;
   align-items: center;
@@ -47,6 +117,21 @@ const emits = defineEmits(["closeAddForm"]);
   width: 100%;
   height: 70px;
   padding: 1.5rem;
+}
+
+.description-input {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.name-input {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
 }
 
 .form-header h1 {
@@ -59,7 +144,7 @@ const emits = defineEmits(["closeAddForm"]);
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  /* background: rgba(0, 0, 0, 0.5); */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -77,5 +162,22 @@ const emits = defineEmits(["closeAddForm"]);
   justify-content: center;
   align-items: center;
 }
-</style>
+
+
+/* prime-vue-custom */
+label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+.p-inputtext:enabled {
+  border-color: #52525b;
+  width: 100%;
+}
+
+.p-inputtext:enabled:hover {
+  border-color: #52525b;
+  width: 100%;
+}</style>
 
