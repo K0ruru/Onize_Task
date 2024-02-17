@@ -443,7 +443,7 @@ hr {
 }
 
 .fade-scale-in {
-  animation: fadeScaleIn 0.5s;
+  animation: fadeScaleIn 0.4s;
 }
 
 @keyframes fadeScaleIn {
