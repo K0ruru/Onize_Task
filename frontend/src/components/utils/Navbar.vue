@@ -37,7 +37,8 @@
 					<span>Tasks</span>
 				</router-link>
 				<router-link to="/Dashboard" style="text-decoration: none">
-					<i class="pi pi-user"></i>
+					<!-- <i class="pi pi-user"></i> -->
+          <i class="pi pi-spin pi-cog" ></i>
 					<span>Account</span>
 				</router-link>
 				<div class="logout" @click="logout">

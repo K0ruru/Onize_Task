@@ -22,12 +22,23 @@ const toggleCollapse = () => {
 </script>
 
 <template>
-   <AddTaskForm v-if="showAddTaskForm" />
+  <!-- <AddTaskForm v-if="showAddTaskForm" /> -->
+  <div v-if="showAddTaskForm" class="overlay"></div>
+  <AddTaskForm v-if="showAddTaskForm" :class="{ 'fade-scale-in': showAddTaskForm }" />
   <div class="container" :class="{ 'collapsed-container': isCollapsed }">
     <Navbar :isCollapsed="isCollapsed" @toggleCollapse="toggleCollapse" />
     <div class="dashboard-content">
 
       <NavbarTop />
+      <!-- navbar-top -->
+      <div class="nav-top">
+        <div class="left-nav">
+          Task List
+        </div>
+        <div class="right-nav">
+          <i class="pi pi-plus" @click="showAddTaskFormModal"></i>
+        </div>
+      </div>
 
       <!-- card-list -->
       <!-- <div class="card-container"> -->
@@ -63,7 +74,7 @@ const toggleCollapse = () => {
       <!--   </Card> -->
       <!-- </div> -->
 
-      <div class="task-container" @click="showAddTaskFormModal">
+      <div class="task-container">
         <div class="task">
           <div class="top-task">
             <div class="task-checklist">
@@ -347,7 +358,6 @@ hr {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  border-bottom: 1px solid #222;
   padding: 1.7%;
 }
 
@@ -359,7 +369,19 @@ hr {
 
 .right-nav {
   color: #6427aa;
+  padding-right: 10px;
 }
+
+.right-nav i {
+  cursor: pointer;
+  font-size: 20px;
+  transition: transform 0.3s ease;
+}
+
+.right-nav i:hover {
+  transform: rotate(90deg);
+}
+
 
 .container {
   display: flex;
@@ -418,5 +440,30 @@ hr {
   margin: 0;
   font-weight: 700;
   color: white;
+}
+
+.fade-scale-in {
+  animation: fadeScaleIn 0.5s;
+}
+
+@keyframes fadeScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
 }
 </style>
