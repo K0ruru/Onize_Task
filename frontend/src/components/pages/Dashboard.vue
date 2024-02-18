@@ -18,7 +18,6 @@
 </script>
 
 <template>
-	<!-- <AddProjectForm v-if="showAddTaskForm" /> -->
 	<div v-if="showAddTaskForm" class="overlay"></div>
 	<AddProjectForm
 		v-if="showAddTaskForm"
