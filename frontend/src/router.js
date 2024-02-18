@@ -5,6 +5,7 @@ import Signup from "./components/pages/Signup.vue";
 
 // pages
 import Dashboard from "./components/pages/Dashboard.vue";
+import Task from "./components/pages/Task.vue";
 
 const routes = [
 	{
@@ -21,6 +22,14 @@ const routes = [
 		path: "/",
 		component: Dashboard,
 		name: "Dashboard",
+		// meta: {
+		// 	requiresAuth: true,
+		// },
+	},
+	{
+		path: "/task",
+		component: Task,
+		name: "Task",
 		// meta: {
 		// 	requiresAuth: true,
 		// },
