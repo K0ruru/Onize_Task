@@ -161,6 +161,7 @@
 		flex-direction: column;
 		margin: 0px 12px;
 		width: 30%;
+    height: 100vh;
 		border-right: 1px solid #222;
 		padding: 10px;
 	}

@@ -29,11 +29,11 @@
 					<img src="../../assets/Onized.png" alt="Logo" />
 					<img class="half" src="../../assets/half-circle.png" alt="Logo" />
 				</div>
-				<router-link to="/Dashboard" style="text-decoration: none">
+				<router-link to="/" style="text-decoration: none">
 					<i class="pi pi-home"></i>
 					<span>Overview</span>
 				</router-link>
-				<router-link to="/Dashboard" style="text-decoration: none">
+				<router-link to="/task" style="text-decoration: none">
 					<i class="pi pi-check-circle"></i>
 					<span>Tasks</span>
 				</router-link>
