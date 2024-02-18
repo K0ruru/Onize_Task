@@ -6,7 +6,6 @@
 	import Checkbox from "primevue/checkbox";
 	import NavbarTop from "../utils/NavbarTop.vue";
 	import AddTaskForm from "../utils/AddTaskForm.vue";
-
 	const showAddTaskForm = ref(false);
 	const checked = ref(false);
 
