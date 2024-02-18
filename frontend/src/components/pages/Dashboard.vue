@@ -2,13 +2,12 @@
 	import Navbar from "../utils/Navbar.vue";
 	import { ref } from "vue";
 	import "primeicons/primeicons.css";
-	import "primeicons/primeicons.css";
-	import Checkbox from "primevue/checkbox";
+	// import Checkbox from "primevue/checkbox";
 	import NavbarTop from "../utils/NavbarTop.vue";
-	import AddTaskForm from "../utils/AddTaskForm.vue";
+	import AddProjectForm from "../utils/AddProjectForm.vue";
 	const showAddTaskForm = ref(false);
-	const checked = ref(false);
-	const selectedCity = ref("");
+	// const checked = ref(false);
+	// const selectedCity = ref("");
 
 	const showAddTaskFormModal = () => {
 		showAddTaskForm.value = !showAddTaskForm.value;
@@ -21,19 +20,19 @@
 </script>
 
 <template>
-	<!-- <AddTaskForm v-if="showAddTaskForm" /> -->
+	<!-- <AddProjectForm v-if="showAddTaskForm" /> -->
 	<div v-if="showAddTaskForm" class="overlay"></div>
-	<AddTaskForm
+	<AddProjectForm
 		v-if="showAddTaskForm"
 		:class="{ 'fade-scale-in': showAddTaskForm }"
 	/>
 	<div class="container" :class="{ 'collapsed-container': isCollapsed }">
 		<Navbar :isCollapsed="isCollapsed" @toggleCollapse="toggleCollapse" />
-		<div class="dashboard-content">
+    <div class="dashboard-content" :style="{marginLeft:isCollapsed? '80px' :'247px'}">
 			<NavbarTop />
 			<!-- navbar-top -->
 			<div class="nav-top">
-				<div class="left-nav">Task List</div>
+				<div class="left-nav">Project List</div>
 				<div class="right-nav">
 					<i class="pi pi-plus" @click="showAddTaskFormModal"></i>
 				</div>
@@ -78,7 +77,7 @@
 					<div class="top-task">
 						<div class="task-checklist">
 							<!-- <Checkbox v-model="checked" invalid binary /> -->
-							<Checkbox v-model="checked" binary variant="filled" />
+							<!-- <Checkbox v-model="checked" binary variant="filled" /> -->
 						</div>
 
 						<div class="task-judul">
@@ -109,7 +108,7 @@
 					<div class="top-task">
 						<div class="task-checklist">
 							<!-- <Checkbox v-model="checked" invalid binary /> -->
-							<Checkbox v-model="checked" binary variant="filled" />
+							<!-- <Checkbox v-model="checked" binary variant="filled" /> -->
 						</div>
 
 						<div class="task-judul">
@@ -138,7 +137,7 @@
 					<div class="top-task">
 						<div class="task-checklist">
 							<!-- <Checkbox v-model="checked" invalid binary /> -->
-							<Checkbox v-model="checked" binary variant="filled" />
+							<!-- <Checkbox v-model="checked" binary variant="filled" /> -->
 						</div>
 
 						<div class="task-judul">
@@ -172,7 +171,7 @@
 					<div class="top-task">
 						<div class="task-checklist">
 							<!-- <Checkbox v-model="checked" invalid binary /> -->
-							<Checkbox v-model="checked" binary variant="filled" />
+							<!-- <Checkbox v-model="checked" binary variant="filled" /> -->
 						</div>
 
 						<div class="task-judul">
@@ -201,7 +200,7 @@
 					<div class="top-task">
 						<div class="task-checklist">
 							<!-- <Checkbox v-model="checked" invalid binary /> -->
-							<Checkbox v-model="checked" binary variant="filled" />
+							<!-- <Checkbox v-model="checked" binary variant="filled" /> -->
 						</div>
 
 						<div class="task-judul">
@@ -362,7 +361,7 @@
 
 	.container {
 		display: flex;
-		width: 99vw;
+		width: 100vw;
 	}
 
 	.collapsed-container {
@@ -370,6 +369,7 @@
 	}
 
 	.dashboard-content {
+    transition: margin-left 0.5s ease-in-out;
 		width: 100%;
 		display: flex;
 		flex-direction: column;

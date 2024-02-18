@@ -1,6 +1,6 @@
 <script setup>
 import "primeicons/primeicons.css";
-import { defineProps, defineEmits } from "vue";
+// import { defineProps, defineEmits } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -29,11 +29,11 @@ const logout = () => {
           <img src="../../assets/Onized.png" alt="Logo" />
           <img class="half" src="../../assets/half-circle.png" alt="Logo" />
         </div>
-        <router-link to="/Dashboard" style="text-decoration: none">
+        <router-link to="/" style="text-decoration: none">
           <i class="pi pi-home"></i>
           <span>Overview</span>
         </router-link>
-        <router-link to="/Dashboard" style="text-decoration: none">
+        <router-link to="/Task" style="text-decoration: none">
           <i class="pi pi-check-circle"></i>
           <span>Tasks</span>
         </router-link>
@@ -67,6 +67,7 @@ const logout = () => {
 }
 
 .side-nav {
+  position: fixed;
   width: 247px;
   height: 100vh;
   background-color: #0b0a0b;
