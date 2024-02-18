@@ -87,7 +87,7 @@ func (r resource) update(c *routing.Context) error {
 }
 
 
-func (r resource) delete (c *routing.Context) error {
+func (r resource) delete(c *routing.Context) error {
 	project, err := r.service.Delete(c.Request.Context(), c.Param("id"))
 
 	if err != nil {
