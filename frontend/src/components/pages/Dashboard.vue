@@ -5,6 +5,7 @@ import "primeicons/primeicons.css";
 import 'primeicons/primeicons.css';
 import Checkbox from 'primevue/checkbox';
 import NavbarTop from "../utils/NavbarTop.vue"
+import Menu from 'primevue/menu';
 import AddTaskForm from "../utils/AddTaskForm.vue"
 const showAddTaskForm = ref(false);
 
@@ -36,6 +37,7 @@ const toggleCollapse = () => {
           Task List
         </div>
         <div class="right-nav">
+          3 Task 
           <i class="pi pi-plus" @click="showAddTaskFormModal"></i>
         </div>
       </div>
@@ -368,11 +370,14 @@ hr {
 }
 
 .right-nav {
-  color: #6427aa;
-  padding-right: 10px;
+  /* padding-right: 10px; */
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .right-nav i {
+  color: #6427aa;
   cursor: pointer;
   font-size: 20px;
   transition: transform 0.3s ease;
