@@ -2,11 +2,9 @@
 	import Navbar from "../utils/Navbar.vue";
 	import { ref } from "vue";
 	import "primeicons/primeicons.css";
-	// import Checkbox from "primevue/checkbox";
 	import NavbarTop from "../utils/NavbarTop.vue";
 	import AddProjectForm from "../utils/AddProjectForm.vue";
 	const showAddTaskForm = ref(false);
-	const checked = ref(false);
 
 	const showAddTaskFormModal = () => {
 		showAddTaskForm.value = !showAddTaskForm.value;
