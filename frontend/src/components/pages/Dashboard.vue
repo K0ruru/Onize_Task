@@ -14,6 +14,7 @@
 	};
 
 	const isCollapsed = ref(false);
+
 	const toggleCollapse = () => {
 		isCollapsed.value = !isCollapsed.value;
 	};
@@ -26,9 +27,12 @@
 		v-if="showAddTaskForm"
 		:class="{ 'fade-scale-in': showAddTaskForm }"
 	/>
-	<div class="container" :class="{ 'collapsed-container': isCollapsed }">
+	<div class="container">
 		<Navbar :isCollapsed="isCollapsed" @toggleCollapse="toggleCollapse" />
-		<div class="dashboard-content">
+		<div
+			class="dashboard-content"
+			:style="{ marginLeft: isCollapsed ? '80px' : '247px' }"
+		>
 			<NavbarTop />
 			<!-- navbar-top -->
 			<div class="nav-top">
@@ -361,7 +365,7 @@
 
 	.container {
 		display: flex;
-		width: 99vw;
+		width: 100vw;
 	}
 
 	.collapsed-container {
@@ -373,6 +377,8 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		flex: 1;
+		transition: margin-left 0.5s ease-in-out;
 	}
 
 	.card-container {

@@ -20,10 +20,10 @@ import (
 	"github.com/qiangxue/go-rest-api/internal/errors"
 	"github.com/qiangxue/go-rest-api/internal/healthcheck"
 	"github.com/qiangxue/go-rest-api/internal/project"
+	"github.com/qiangxue/go-rest-api/internal/tasks"
 	"github.com/qiangxue/go-rest-api/pkg/accesslog"
 	"github.com/qiangxue/go-rest-api/pkg/dbcontext"
 	"github.com/qiangxue/go-rest-api/pkg/log"
-	"github.com/qiangxue/go-rest-api/tasks"
 )
 
 // Version indicates the current version of the application.
