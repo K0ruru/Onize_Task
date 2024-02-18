@@ -28,7 +28,7 @@
 	/>
 	<div class="container" :class="{ 'collapsed-container': isCollapsed }">
 		<Navbar :isCollapsed="isCollapsed" @toggleCollapse="toggleCollapse" />
-    <div class="dashboard-content" :style="{marginLeft:isCollapsed? '80px' :'247px'}">
+		<div class="dashboard-content">
 			<NavbarTop />
 			<!-- navbar-top -->
 			<div class="nav-top">
@@ -361,7 +361,7 @@
 
 	.container {
 		display: flex;
-		width: 100vw;
+		width: 99vw;
 	}
 
 	.collapsed-container {
@@ -369,7 +369,6 @@
 	}
 
 	.dashboard-content {
-    transition: margin-left 0.5s ease-in-out;
 		width: 100%;
 		display: flex;
 		flex-direction: column;

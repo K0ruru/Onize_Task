@@ -67,7 +67,6 @@ const logout = () => {
 }
 
 .side-nav {
-  position: fixed;
   width: 247px;
   height: 100vh;
   background-color: #0b0a0b;
