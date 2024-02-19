@@ -2,10 +2,11 @@ package album
 
 import (
 	"context"
+	"time"
+
 	validation "github.com/go-ozzo/ozzo-validation/v4"
 	"github.com/qiangxue/go-rest-api/internal/entity"
 	"github.com/qiangxue/go-rest-api/pkg/log"
-	"time"
 )
 
 // Service encapsulates usecase logic for albums.
@@ -40,7 +41,7 @@ type UpdateAlbumRequest struct {
 	Name string `json:"name"`
 }
 
-// Validate validates the CreateAlbumRequest fields.
+// Validate validates the UpdateAlbumRequest fields.
 func (m UpdateAlbumRequest) Validate() error {
 	return validation.ValidateStruct(&m,
 		validation.Field(&m.Name, validation.Required, validation.Length(0, 128)),
