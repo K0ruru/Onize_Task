@@ -1,39 +1,40 @@
-
-<script>
+<script setup>
 import InputText from 'primevue/inputtext';
 import axios from 'axios';
+import { jwtDecode } from "jwt-decode";
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
-export default {
-  data() {
-    return {
-      name: '',
-      email: '',
-      no_telp: '',
-      passphrase: ''
-    };
-  },
-  methods: {
-    SignUp() {
-      const userData = {
-        name: this.name,
-        email: this.email,
-        no_telp: this.no_telp,
-        passphrase: this.passphrase
-      };
+const router = useRouter();
 
-      axios.post('http://localhost:8080/onize/signup', userData)
-        .then(response => {
-          console.log('Signup success:', response.data);
-          // Lakukan apa yang diperlukan setelah pendaftaran berhasil, misalnya menampilkan pesan sukses atau mengarahkan pengguna ke halaman login
-        })
-        .catch(error => {
-          console.error('Signup error:', error.response.data);
-          // Handle error sesuai kebutuhan, misalnya menampilkan pesan error kepada pengguna
-        });
-    }
+const name = ref('');
+const email = ref('');
+const no_telp = ref('');
+const passphrase = ref('');
+
+const SignUp = async() => {
+  
+  const response = await axios.post("http://localhost:8080/onize/signup", {
+    name: name.value,
+    email: email.value,
+    no_telp: no_telp.value,
+    passphrase: passphrase.value,
+  })
+
+  console.log(response)
+  const token = response.data.token
+
+  if(token) {
+    const decoded = jwtDecode(token)
+
+    const userID = decoded.id
+
+    localStorage.setItem('token', token)
+    localStorage.setItem('userID', userID)
+
+    router.push("/")
   }
 };
-;
 </script>
 <template>
   <div class="container-center">

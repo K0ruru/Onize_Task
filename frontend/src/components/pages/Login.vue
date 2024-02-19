@@ -3,17 +3,15 @@
 	import { ref } from "vue";
 	import { useRouter } from "vue-router";
 
-	// plugins
 	import InputText from "primevue/inputtext";
 	import Password from "primevue/password";
 	import Toast from "primevue/toast";
 	import { useToast } from "primevue/usetoast";
+	import { jwtDecode } from "jwt-decode";
 
-	// plugins
 	const router = useRouter();
 	const toast = useToast();
 
-	// refs
 	const Email = ref("");
 	const Passphrase = ref("");
 
@@ -27,7 +25,12 @@
 			const token = res.data.token;
 
 			if (token) {
+				const decoded = jwtDecode(token);
+
+				const userID = decoded.id;
+
 				localStorage.setItem("token", token);
+				localStorage.setItem("userID", userID);
 				router.push("/");
 			} else {
 				console.error("Token not received in the response");
