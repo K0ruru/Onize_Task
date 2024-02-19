@@ -19,7 +19,7 @@
 
 	const login = async () => {
 		try {
-			const res = await axios.post("http://localhost:8080/v1/login", {
+			const res = await axios.post("http://localhost:8080/onize/login", {
 				email: Email.value,
 				passphrase: Passphrase.value,
 			});

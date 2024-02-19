@@ -1,12 +1,45 @@
 
 <script>
 import InputText from 'primevue/inputtext';
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      name: '',
+      email: '',
+      no_telp: '',
+      passphrase: ''
+    };
+  },
+  methods: {
+    SignUp() {
+      const userData = {
+        name: this.name,
+        email: this.email,
+        no_telp: this.no_telp,
+        passphrase: this.passphrase
+      };
+
+      axios.post('http://localhost:8080/onize/signup', userData)
+        .then(response => {
+          console.log('Signup success:', response.data);
+          // Lakukan apa yang diperlukan setelah pendaftaran berhasil, misalnya menampilkan pesan sukses atau mengarahkan pengguna ke halaman login
+        })
+        .catch(error => {
+          console.error('Signup error:', error.response.data);
+          // Handle error sesuai kebutuhan, misalnya menampilkan pesan error kepada pengguna
+        });
+    }
+  }
+};
+;
 </script>
 <template>
   <div class="container-center">
     <div class="container" id="container">
       <!-- <div class="form-container log-in-container"> -->
-      <form action="#">
+      <form @submit.prevent="SignUp">
         <h1 class="login-header">Signup</h1>
         <!-- <input type="email" placeholder="Email" /> -->
         <!-- <input type="password" placeholder="Password" /> -->
@@ -14,19 +47,19 @@ import InputText from 'primevue/inputtext';
 
           <div class="left-side">
             <div class="form-input">
-              <InputText id="username" v-model="value" aria-describedby="username-help" placeholder="Username" />
+              <InputText id="username" v-model="name" aria-describedby="username-help" placeholder="Username" />
             </div>
             <div class="form-input">
-              <InputText id="email" v-model="value" aria-describedby="email-help" placeholder="Email" />
+              <InputText id="email" v-model="email" aria-describedby="email-help" placeholder="Email" />
             </div>
           </div>
 
           <div class="left-side">
             <div class="form-input">
-              <InputText id="username" v-model="value" aria-describedby="username-help" placeholder="No Tlpn" />
+              <InputText id="username" v-model="no_telp" aria-describedby="username-help" placeholder="No Tlpn" />
             </div>
             <div class="form-input">
-              <InputText id="username" v-model="value" aria-describedby="username-help" placeholder="Password" />
+              <InputText id="username" v-model="passphrase" aria-describedby="username-help" placeholder="Password" />
             </div>
           </div>
 
@@ -35,7 +68,7 @@ import InputText from 'primevue/inputtext';
 
 
         <a href="/login">have an account? <span>Login</span></a>
-        <button>Signup</button>
+        <button type="submit">Signup</button>
       </form>
       <!-- </div> -->
       <!-- <div class="overlay-container"> -->
