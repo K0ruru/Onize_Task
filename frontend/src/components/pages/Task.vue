@@ -1,56 +1,80 @@
 <script setup>
 	import Navbar from "../utils/Navbar.vue";
-	import { ref } from "vue";
+	import { ref, onMounted } from "vue";
+	import { useRoute } from "vue-router";
+	import axios from "axios";
 	import "primeicons/primeicons.css";
 	import NavbarTop from "../utils/NavbarTop.vue";
 	import AddTaskForm from "../utils/AddTaskForm.vue";
+	import draggable from "vuedraggable";
+
 	const showAddTaskForm = ref(false);
-
-	const showAddTaskFormModal = () => {
-		showAddTaskForm.value = !showAddTaskForm.value;
-	};
-
+	const route = useRoute();
 	const isCollapsed = ref(false);
+	const notStartedTasks = ref([]);
+	const inProgressTasks = ref([]);
+	const doneTasks = ref([]);
 
 	const toggleCollapse = () => {
 		isCollapsed.value = !isCollapsed.value;
 	};
 
-	// for dragabale
-	import draggable from "vuedraggable";
+	onMounted(async () => {
+		try {
+			const project_id = route.params.id;
 
-	const notStartedTasks = ref([
-		{ id: 1, title: "Meeting di pancong", deadline: "12/02/20204" },
-		{ id: 2, title: "Record zoom meeting", deadline: "Not Started" },
-		{ id: 3, title: "Hehe", deadline: "Not Started" },
-		{ id: 3, title: "Hehe", deadline: "Not Started" },
-		{ id: 3, title: "Hehe", deadline: "Not Started" },
-		{ id: 3, title: "Hehe", deadline: "Not Started" },
-		{ id: 3, title: "Hehe", deadline: "Not Started" },
-		{ id: 3, title: "Hehe", deadline: "Not Started" },
-		{ id: 3, title: "Hehe", deadline: "Not Started" },
-		{ id: 3, title: "Hehe", deadline: "Not Started" },
-		// Add more tasks as needed
-	]);
+			const res = await axios.get(
+				`http://localhost:8080/onize/tasks/project/${project_id}`
+			);
 
-	const inProgressTasks = ref([]);
-	const doneTasks = ref([]);
-
-	const onDragEnd = (event) => {
-		const movedTask = event.item.vue.options.propsData.element;
-		const oldIndex = event.oldIndex;
-		const newIndex = event.newIndex;
-
-		// Update the task array based on the drag-and-drop action
-		if (oldIndex !== newIndex) {
-			// Remove the task from the old position
-			notStartedTasks.value.splice(oldIndex, 1);
-
-			// Insert the task at the new position
-			notStartedTasks.value.splice(newIndex, 0, movedTask);
+			notStartedTasks.value = res.data.filter(
+				(task) => task.status === "not started"
+			);
+			inProgressTasks.value = res.data.filter(
+				(task) => task.status === "in progress"
+			);
+			doneTasks.value = res.data.filter((task) => task.status === "completed");
+		} catch (err) {
+			console.log(err);
 		}
+	});
 
-		console.log("Task moved:", movedTask, "from", oldIndex, "to", newIndex);
+	const headers = {
+		Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDg1ODQzNjUsImlkIjoiYTQ1Nzk5MzAtZWRmZi00NWM5LTkyZmQtMDMxM2UwZDAwYTliIiwibmFtZSI6Ik51cmZhaXogUWFsYmkifQ.vmjjy9I33S8g27ZmiGwUYQcqB2MRUeOY88KuX3vTQn8`,
+		"Content-Type": "application/json",
+	};
+
+	const onDragEnd = async (event) => {
+		const draggedTask = event.item;
+		const taskId = draggedTask.getAttribute("data-task-id");
+
+		// Determine the new status based on the task's position in the container
+		const newStatus = determineStatus(event.to.children);
+		console.log(newStatus);
+
+		const statusAsString = String(newStatus);
+
+		// Make the axios.put request
+		try {
+			const res = await axios.put(
+				`http://localhost:8080/onize/tasks/status/${taskId}`,
+				{
+					status: statusAsString,
+				},
+				{ headers }
+			);
+			console.log(res.data); // Assuming the response contains relevant data
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
+	// Function to determine the status based on the task's position
+	const determineStatus = (children) => {
+		if (children.length > 0) {
+			return children[0].getAttribute("data-status");
+		}
+		return "fallbackStatus"; // Default status if needed
 	};
 </script>
 
@@ -79,13 +103,22 @@
 			<div class="task-container">
 				<div class="task-card-container">
 					<h2>Not Started</h2>
-					<draggable v-model="notStartedTasks" group="tasks" @end="onDragEnd">
+					<draggable
+						:list="notStartedTasks"
+						group="tasks"
+						item-key="id"
+						@end="onDragEnd"
+					>
 						<template #item="{ element }">
-							<div :key="element.id" class="task-card">
+							<div
+								:data-task-id="element.id"
+								data-status="not started"
+								class="task-card"
+								draggable="true"
+							>
 								<div class="task-item">
 									<div class="task-content">
 										<div class="task-title">{{ element.title }}</div>
-										<!-- <div class="task-deadline">{{ element.deadline }}</div> -->
 										<div class="task-deadline">
 											<i class="pi pi-circle-fill green"></i>
 											{{ element.deadline }}
@@ -102,16 +135,28 @@
 
 				<div class="task-card-container">
 					<h2>In Progress</h2>
-					<draggable v-model="inProgressTasks" group="tasks" @end="onDragEnd">
+					<draggable
+						:list="inProgressTasks"
+						group="tasks"
+						@end="onDragEnd"
+						item-key="id"
+					>
 						<template #item="{ element }">
-							<div :key="element.id" class="task-card">
-								<div class="task-content">
-									<div class="task-title">{{ element.title }}</div>
-									<div class="task-deadline">
-										<i class="pi pi-circle-fill green"></i>
-										{{ element.deadline }}
+							<div
+								:data-task-id="element.id"
+								data-status="in progress"
+								class="task-card"
+								draggable="true"
+							>
+								<div class="task-item">
+									<div class="task-content">
+										<div class="task-title">{{ element.title }}</div>
+										<div class="task-deadline">
+											<i class="pi pi-circle-fill green"></i>
+											{{ element.deadline }}
+										</div>
+										<!-- Add more task details as needed -->
 									</div>
-									<!-- Add more task details as needed -->
 								</div>
 							</div>
 						</template>
@@ -120,12 +165,21 @@
 
 				<div class="task-card-container">
 					<h2>Done</h2>
-					<draggable v-model="doneTasks" group="tasks" @end="onDragEnd">
+					<draggable
+						:list="doneTasks"
+						group="tasks"
+						@end="onDragEnd"
+						item-key="id"
+					>
 						<template #item="{ element }">
-							<div :key="element.id" class="task-card">
+							<div
+								:data-task-id="element.id"
+								data-status="completed"
+								class="task-card"
+								draggable="true"
+							>
 								<div class="task-content">
 									<div class="task-title">{{ element.title }}</div>
-									<!-- <div class="task-deadline">{{ element.deadline }}</div> -->
 									<div class="task-deadline">
 										<i class="pi pi-circle-fill green"></i>
 										{{ element.deadline }}
@@ -161,7 +215,7 @@
 		flex-direction: column;
 		margin: 0px 12px;
 		width: 30%;
-    height: 100vh;
+		height: 100vh;
 		border-right: 1px solid #222;
 		padding: 10px;
 	}

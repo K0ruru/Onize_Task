@@ -3,6 +3,7 @@ package tasks
 import (
 	"context"
 
+	dbx "github.com/go-ozzo/ozzo-dbx"
 	"github.com/qiangxue/go-rest-api/internal/entity"
 	"github.com/qiangxue/go-rest-api/pkg/dbcontext"
 	"github.com/qiangxue/go-rest-api/pkg/log"
@@ -10,6 +11,7 @@ import (
 
 type Repository interface {
 	Get(ctx context.Context, id string) (entity.Task, error)
+	GetByProject(ctx context.Context, project_id string) (entity.Task, error)
 	Querry(ctx context.Context) ([]entity.Task, error)
 	Create(ctx context.Context, task entity.Task) (entity.Task, error)
 	Update(ctx context.Context, task entity.Task) (entity.Task, error)
@@ -31,6 +33,14 @@ func(r repository) Get(ctx context.Context, id string) (entity.Task, error) {
 	err := r.db.With(ctx).Select().Model(id, &task)
 
 	return task, err
+}
+
+func (r repository) GetByProject(ctx context.Context, project_id string) ([]entity.Task, error) {
+	var tasks []entity.Task
+
+	err := r.db.With(ctx).Select().Where(dbx.HashExp{"project_id": project_id}).All(&tasks)
+
+	return tasks, err
 }
 
 func (r repository) Querry(ctx context.Context) ([]entity.Task, error) {

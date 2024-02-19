@@ -27,7 +27,7 @@ const routes = [
 		// },
 	},
 	{
-		path: "/task",
+		path: "/task/:id",
 		component: Task,
 		name: "Task",
 		// meta: {

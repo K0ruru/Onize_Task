@@ -44,6 +44,7 @@ type service struct {
 
 type Service interface {
 	Get(ctx context.Context, id string) (Task, error)
+	GetByProject(ctx context.Context, project_id string) ([]Task, error)
 	Querry(ctx context.Context) ([]Task, error)
 	Create(ctx context.Context, input CreateTask) (Task, error)
 	Update(ctx context.Context, id string, input UpdateTask) (Task, error)
@@ -91,6 +92,23 @@ func (s service) Get(ctx context.Context, id string) (Task, error) {
 	}
 
 	return Task{task}, nil
+}
+
+// GetByProject implements Service
+func(s service) GetByProject(ctx context.Context, project_id string) ([]Task, error) {
+	tasks, err := s.repo.GetByProject(ctx, project_id)
+
+	if err != nil {
+		return []Task{}, err
+	}
+
+	result := []Task{}
+
+	for _, task := range tasks {
+		result = append(result, Task{task})
+	}
+
+	return result, nil
 }
 
 // Querry implements Service.
