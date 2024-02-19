@@ -11,7 +11,7 @@ import (
 
 type Repository interface {
 	Get(ctx context.Context, id string) (entity.Task, error)
-	GetByProject(ctx context.Context, project_id string) (entity.Task, error)
+	GetByProject(ctx context.Context, project_id string) ([]entity.Task, error)
 	Querry(ctx context.Context) ([]entity.Task, error)
 	Create(ctx context.Context, task entity.Task) (entity.Task, error)
 	Update(ctx context.Context, task entity.Task) (entity.Task, error)
