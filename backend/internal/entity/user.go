@@ -6,6 +6,7 @@ type User struct {
 	Name       string
 	Passphrase string
 	Email      string
+	No_telp    string
 }
 
 // GetID returns the user ID.
