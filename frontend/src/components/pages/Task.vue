@@ -15,10 +15,6 @@
 	const inProgressTasks = ref([]);
 	const doneTasks = ref([]);
 
-	const showAddTaskFormModal = () => {
-		showAddTaskForm.value = true;
-	};
-
 	const toggleCollapse = () => {
 		isCollapsed.value = !isCollapsed.value;
 	};
