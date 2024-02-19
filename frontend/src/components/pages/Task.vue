@@ -5,6 +5,7 @@ import "primeicons/primeicons.css";
 import NavbarTop from "../utils/NavbarTop.vue";
 
 
+// for add form task
 import AddTaskForm from "../utils/AddTaskForm.vue";
 const showAddTaskForm = ref(false);
 const showAddTaskFormModal = () => {
@@ -17,7 +18,17 @@ const isCollapsed = ref(false);
 const toggleCollapse = () => {
   isCollapsed.value = !isCollapsed.value;
 };
+// end 
 
+
+import TaskDetail from "../utils/TaskDetail.vue";
+const showTaskDetail = ref(false);
+const showTaskDetailModal = () => {
+  showTaskDetail.value = true;
+};
+const closeDetailModal = () => {
+  showTaskDetail.value = false;
+};
 
 
 // for dragabale
@@ -59,11 +70,13 @@ const onDragEnd = (event) => {
 </script>
 
 <template>
+  <!-- add task -->
   <div v-if="showAddTaskForm" class="overlay" @click="closeFormModal"></div>
   <AddTaskForm @click="closeFormModal" v-if="showAddTaskForm" :class="{ 'fade-scale-in': showAddTaskForm }" />
-  <!-- <AddTaskForm v-if="showAddTaskForm" /> -->
-  <!-- <div v-if="showAddTaskForm" class="overlay"></div> -->
-  <!-- <AddTaskForm v-if="showAddTaskForm" :class="{ 'fade-scale-in': showAddTaskForm }" /> -->
+
+  <div v-if="showTaskDetail" class="overlay" @click="closeDetailModal"></div>
+  <TaskDetail @click="closeDetailModal" v-if="showTaskDetail" :class="{ 'fade-scale-in': showTaskDetail }" />
+
   <div class="container" :class="{ 'collapsed-container': isCollapsed }">
     <Navbar :isCollapsed="isCollapsed" @toggleCollapse="toggleCollapse" />
     <div class="dashboard-content" :style="{ marginLeft: isCollapsed ? '80px' : '247px' }">
@@ -76,7 +89,7 @@ const onDragEnd = (event) => {
         </div>
       </div>
 
-      <div class="task-container">
+      <div class="task-container" @click="showTaskDetailModal">
         <div class="task-card-container">
           <h2>Not Started</h2>
           <draggable v-model="notStartedTasks" group="tasks" @end="onDragEnd">
