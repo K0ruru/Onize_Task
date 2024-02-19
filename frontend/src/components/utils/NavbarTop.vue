@@ -41,7 +41,9 @@ const filterOptions = [{ name: "Week" }, { name: "Day" }, { name: "Month" }];
       <div class="filter"><i class="pi pi-tag"></i>Filter</div>
     </div>
     <div class="right-nav">
-      <i class="pi pi-circle-fill"></i>
+      <i class="pi pi-chevron-left"></i>
+      <i class="pi pi-calendar"></i>
+      <i class="pi pi-chevron-right"></i>
     </div>
   </div>
 </template>
@@ -61,6 +63,7 @@ const filterOptions = [{ name: "Week" }, { name: "Day" }, { name: "Month" }];
   border-bottom: 1px solid #222;
   padding: 1.7%;
   align-items: center;
+  height: 60px;
 }
 
 .left-nav {
@@ -70,7 +73,13 @@ const filterOptions = [{ name: "Week" }, { name: "Day" }, { name: "Month" }];
 }
 
 .right-nav {
-  color: #6427aa;
-  padding-right: 15px;
+  display: flex;
+  gap: 10px;
+}
+.right-nav i {
+  border-radius: 7px;
+  font-size: 12px;
+  background-color: rgba(90, 90, 90, 0.2);
+  padding: 9px;
 }
 </style>

@@ -1,50 +1,43 @@
-
 <script setup>
 import Navbar from "../utils/Navbar.vue";
 import { ref } from "vue";
 import "primeicons/primeicons.css";
-import NavbarTop from "../utils/NavbarTop.vue";
-import AddProjectForm from "../utils/AddProjectForm.vue";
-
-// const showAddTaskForm = ref(false);
-// const showAddTaskFormModal = () => {
-// 	showAddTaskForm.value = !showAddTaskForm.value;
-// };
-//
-// const isCollapsed = ref(false);
-//
-// const toggleCollapse = () => {
-// 	isCollapsed.value = !isCollapsed.value;
-// };
+import 'primeicons/primeicons.css';
+import Checkbox from 'primevue/checkbox';
+import NavbarTop from "../utils/NavbarTop.vue"
+import Menu from 'primevue/menu';
+import AddTaskForm from "../utils/AddTaskForm.vue"
 const showAddTaskForm = ref(false);
 
 const showAddTaskFormModal = () => {
-  showAddTaskForm.value = true;
+  showAddTaskForm.value = !showAddTaskForm.value;
 };
 
-const closeFormModal = () => {
-  showAddTaskForm.value = false;
-};
 
 const isCollapsed = ref(false);
-
 const toggleCollapse = () => {
   isCollapsed.value = !isCollapsed.value;
 };
 
+
 </script>
 
 <template>
-  <div v-if="showAddTaskForm" class="overlay" @click="closeFormModal"></div>
-  <AddProjectForm @click="closeFormModal" v-if="showAddTaskForm" :class="{ 'fade-scale-in': showAddTaskForm }" />
-  <div class="container">
+  <!-- <AddTaskForm v-if="showAddTaskForm" /> -->
+  <div v-if="showAddTaskForm" class="overlay"></div>
+  <AddTaskForm v-if="showAddTaskForm" :class="{ 'fade-scale-in': showAddTaskForm }" />
+  <div class="container" :class="{ 'collapsed-container': isCollapsed }">
     <Navbar :isCollapsed="isCollapsed" @toggleCollapse="toggleCollapse" />
-    <div class="dashboard-content" :style="{ marginLeft: isCollapsed ? '80px' : '247px' }">
+    <div class="dashboard-content">
+
       <NavbarTop />
       <!-- navbar-top -->
       <div class="nav-top">
-        <div class="left-nav">Project List</div>
+        <div class="left-nav">
+          Task List
+        </div>
         <div class="right-nav">
+          3 Task 
           <i class="pi pi-plus" @click="showAddTaskFormModal"></i>
         </div>
       </div>
@@ -88,7 +81,7 @@ const toggleCollapse = () => {
           <div class="top-task">
             <div class="task-checklist">
               <!-- <Checkbox v-model="checked" invalid binary /> -->
-              <!-- <Checkbox v-model="checked" binary variant="filled" /> -->
+              <Checkbox v-model="checked" binary variant="filled" />
             </div>
 
             <div class="task-judul">
@@ -97,18 +90,22 @@ const toggleCollapse = () => {
 
             <!-- new add date -->
             <div class="task-date">
-              <i class="pi pi-calendar"> </i> Jan 17 2024
+              <i class="pi pi-calendar">
+              </i> Jan 17 2024
             </div>
 
             <div class="task-action">
               <i class="pi pi-ellipsis-v"></i>
             </div>
+
+
           </div>
 
           <div class="task-badge">
             <i class="pi pi-circle-fill green"></i>
             <p>Study</p>
           </div>
+
         </div>
       </div>
 
@@ -119,7 +116,7 @@ const toggleCollapse = () => {
           <div class="top-task">
             <div class="task-checklist">
               <!-- <Checkbox v-model="checked" invalid binary /> -->
-              <!-- <Checkbox v-model="checked" binary variant="filled" /> -->
+              <Checkbox v-model="checked" binary variant="filled" />
             </div>
 
             <div class="task-judul">
@@ -128,27 +125,31 @@ const toggleCollapse = () => {
 
             <!-- new add date -->
             <div class="task-date">
-              <i class="pi pi-calendar"> </i> Jan 18 2024
+              <i class="pi pi-calendar">
+              </i> Jan 18 2024
             </div>
 
             <div class="task-action">
               <i class="pi pi-ellipsis-v"></i>
             </div>
+
           </div>
 
           <div class="task-badge">
             <i class="pi pi-circle-fill yellow"></i>
             <p>Study</p>
           </div>
+
         </div>
       </div>
+
 
       <div class="task-container">
         <div class="task">
           <div class="top-task">
             <div class="task-checklist">
               <!-- <Checkbox v-model="checked" invalid binary /> -->
-              <!-- <Checkbox v-model="checked" binary variant="filled" /> -->
+              <Checkbox v-model="checked" binary variant="filled" />
             </div>
 
             <div class="task-judul">
@@ -157,23 +158,26 @@ const toggleCollapse = () => {
 
             <!-- new add date -->
             <div class="task-date">
-              <i class="pi pi-calendar"> </i> Jan 18 2024
+              <i class="pi pi-calendar">
+              </i> Jan 18 2024
             </div>
 
             <div class="task-action">
               <i class="pi pi-ellipsis-v"></i>
             </div>
+
           </div>
 
           <div class="task-badge">
             <i class="pi pi-circle-fill red"></i>
             <p>Study</p>
           </div>
+
         </div>
       </div>
 
       <!-- baris akhir tugas belum selesai -->
-      <hr />
+      <hr>
 
       <!-- baris baru tugas sudah selesai -->
 
@@ -182,7 +186,7 @@ const toggleCollapse = () => {
           <div class="top-task">
             <div class="task-checklist">
               <!-- <Checkbox v-model="checked" invalid binary /> -->
-              <!-- <Checkbox v-model="checked" binary variant="filled" /> -->
+              <Checkbox v-model="checked" binary variant="filled" />
             </div>
 
             <div class="task-judul">
@@ -191,12 +195,14 @@ const toggleCollapse = () => {
 
             <!-- new add date -->
             <div class="task-date">
-              <i class="pi pi-calendar"> </i> Jan 18 2024
+              <i class="pi pi-calendar">
+              </i> Jan 18 2024
             </div>
 
             <div class="task-action">
               <i class="pi pi-ellipsis-v"></i>
             </div>
+
           </div>
 
           <div class="task-badge">
@@ -211,7 +217,7 @@ const toggleCollapse = () => {
           <div class="top-task">
             <div class="task-checklist">
               <!-- <Checkbox v-model="checked" invalid binary /> -->
-              <!-- <Checkbox v-model="checked" binary variant="filled" /> -->
+              <Checkbox v-model="checked" binary variant="filled" />
             </div>
 
             <div class="task-judul">
@@ -220,12 +226,14 @@ const toggleCollapse = () => {
 
             <!-- new add date -->
             <div class="task-date">
-              <i class="pi pi-calendar"> </i> Jan 18 2024
+              <i class="pi pi-calendar">
+              </i> Jan 18 2024
             </div>
 
             <div class="task-action">
               <i class="pi pi-ellipsis-v"></i>
             </div>
+
           </div>
 
           <div class="task-badge">
@@ -234,6 +242,9 @@ const toggleCollapse = () => {
           </div>
         </div>
       </div>
+
+
+
     </div>
   </div>
 </template>
@@ -255,6 +266,7 @@ hr {
   padding: 7px;
   text-align: center;
 }
+
 
 .red {
   color: red;
@@ -305,7 +317,7 @@ hr {
 .task-badge p {
   margin: 0;
   margin-top: 5px;
-  font-size: 12px;
+  font-size: 12px
 }
 
 .task-judul {
@@ -342,6 +354,8 @@ hr {
   height: 20px;
 }
 
+
+
 .nav-top {
   display: flex;
   justify-content: space-between;
@@ -356,11 +370,14 @@ hr {
 }
 
 .right-nav {
-  color: #6427aa;
-  padding-right: 10px;
+  /* padding-right: 10px; */
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .right-nav i {
+  color: #6427aa;
   cursor: pointer;
   font-size: 20px;
   transition: transform 0.3s ease;
@@ -369,6 +386,7 @@ hr {
 .right-nav i:hover {
   transform: rotate(90deg);
 }
+
 
 .container {
   display: flex;
@@ -384,8 +402,6 @@ hr {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 1;
-  transition: margin-left 0.5s ease-in-out;
 }
 
 .card-container {
@@ -446,7 +462,6 @@ hr {
     transform: scale(1);
   }
 }
-
 .overlay {
   position: fixed;
   top: 0;
