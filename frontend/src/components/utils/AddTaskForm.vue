@@ -2,7 +2,13 @@
 import InputText from 'primevue/inputtext';
 import Editor from 'primevue/editor';
 import Calendar from 'primevue/calendar';
-const emits = defineEmits(["closeAddForm"]);
+import { defineEmits } from "vue";
+const emits = defineEmits(["closeFormModal"]);
+
+const closeFormModal = () => {
+  emits("closeFormModal");
+};
+
 
 </script>
 
@@ -13,7 +19,9 @@ const emits = defineEmits(["closeAddForm"]);
       <!-- header ini aa -->
       <div class="form-header">
         <h1>Create Task</h1>
-        <p>X</p>
+        <!-- <i class="pi pi-times" @click="closeFormModal"></i> -->
+        <Button icon="pi pi-times" @click="closeFormModal" class="p-button-rounded p-button-text"></Button>
+        <!-- <Button icon="pi pi-times" @click="emits('closeFormModal')" class="p-button-rounded p-button-text"></Button> -->
       </div>
 
       <!-- form ini aa -->
@@ -38,7 +46,7 @@ const emits = defineEmits(["closeAddForm"]);
           </div>
 
           <div class="due">
-          <label for="due">Due</label>
+            <label for="due">Due</label>
             <!-- <input type="date"> -->
             <Calendar v-model="date" />
           </div>
@@ -46,7 +54,7 @@ const emits = defineEmits(["closeAddForm"]);
       </div>
 
       <div class="button-form">
-        <button class="button-cencel">Cencel</button>
+        <button class="button-cencel" @click="closeFormModal">Cencel</button>
         <button class="button-save">Save</button>
       </div>
 
@@ -69,13 +77,22 @@ const emits = defineEmits(["closeAddForm"]);
   border: none;
   padding: 10px 5px;
   border-radius: 5px;
+  transition: all 0.2s;
 }
+.button-form .button-save:hover {
+  background: #6430ab;
+}
+
 .button-form .button-cencel {
   width: 20%;
   background: #0a0b0a;
   border: 1px solid #6427aa;
   padding: 10px 5px;
   border-radius: 5px;
+  transition: all 0.2s;
+}
+.button-form .button-cencel:hover {
+  border: 1px solid #ff0000;
 }
 
 .start-due {
@@ -117,6 +134,10 @@ const emits = defineEmits(["closeAddForm"]);
   width: 100%;
   height: 70px;
   padding: 1.5rem;
+}
+
+.form-header i {
+  cursor: pointer;
 }
 
 .description-input {
@@ -179,5 +200,8 @@ label {
 .p-inputtext:enabled:hover {
   border-color: #52525b;
   width: 100%;
-}</style>
+}
+</style>
+
+
 
