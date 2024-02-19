@@ -5,21 +5,16 @@ import "primeicons/primeicons.css";
 import NavbarTop from "../utils/NavbarTop.vue";
 import AddProjectForm from "../utils/AddProjectForm.vue";
 const showAddTaskForm = ref(false);
-
 const showAddTaskFormModal = () => {
   showAddTaskForm.value = true;
 };
-
 const closeFormModal = () => {
   showAddTaskForm.value = false;
 };
-
 const isCollapsed = ref(false);
-
 const toggleCollapse = () => {
   isCollapsed.value = !isCollapsed.value;
 };
-
 </script>
 
 <template>

@@ -50,6 +50,21 @@ const closeFormModal = () => {
             <!-- <input type="date"> -->
             <Calendar v-model="date" />
           </div>
+
+        </div>
+        <div class="start-due">
+          <div class="start">
+            <label for="start">Start</label>
+            <!-- <input type="date"> -->
+            <Calendar v-model="date" />
+          </div>
+
+          <div class="due">
+            <label for="due">Due</label>
+            <!-- <input type="date"> -->
+            <Calendar v-model="date" />
+          </div>
+
         </div>
       </div>
 
@@ -79,6 +94,7 @@ const closeFormModal = () => {
   border-radius: 5px;
   transition: all 0.2s;
 }
+
 .button-form .button-save:hover {
   background: #6430ab;
 }
@@ -91,6 +107,7 @@ const closeFormModal = () => {
   border-radius: 5px;
   transition: all 0.2s;
 }
+
 .button-form .button-cencel:hover {
   border: 1px solid #ff0000;
 }
@@ -101,7 +118,7 @@ const closeFormModal = () => {
   justify-content: flex-start;
   align-items: center;
   gap: 1.5rem;
-  padding: 1.5rem 0rem;
+  padding-top: 1.4rem;
 }
 
 .start {
