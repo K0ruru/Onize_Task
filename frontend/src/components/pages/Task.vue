@@ -105,8 +105,8 @@ const closeDetailModal = () => {
 
 <template>
   <!-- add task -->
-  <div v-if="showAddTaskForm" class="overlay" @click="closeFormModal"></div>
-  <AddTaskForm @click="closeFormModal" v-if="showAddTaskForm" :class="{ 'fade-scale-in': showAddTaskForm }" />
+  <div v-if="showAddTaskForm" class="overlay"></div>
+  <AddTaskForm v-if="showAddTaskForm" @close-form-modal="closeFormModal" :class="{ 'fade-scale-in': showAddTaskForm }" />
 
   <div v-if="showTaskDetail" class="overlay" @click="closeDetailModal"></div>
   <TaskDetail @click="closeDetailModal" v-if="showTaskDetail" :class="{ 'fade-scale-in': showTaskDetail }" />

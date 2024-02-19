@@ -19,7 +19,7 @@ const toggleCollapse = () => {
 
 <template>
   <div v-if="showAddTaskForm" class="overlay" @click="closeFormModal"></div>
-  <AddProjectForm @click="closeFormModal" v-if="showAddTaskForm" :class="{ 'fade-scale-in': showAddTaskForm }" />
+  <AddProjectForm v-if="showAddTaskForm" @close-form-modal="closeFormModal" :class="{ 'fade-scale-in': showAddTaskForm }" />
 
   <div class="container">
     <Navbar :isCollapsed="isCollapsed" @toggleCollapse="toggleCollapse" />

@@ -2,6 +2,8 @@
 import InputText from 'primevue/inputtext';
 import Editor from 'primevue/editor';
 import Calendar from 'primevue/calendar';
+import Chips from 'primevue/chips';
+import Dropdown from 'primevue/dropdown';
 import { defineEmits } from "vue";
 const emits = defineEmits(["closeFormModal"]);
 
@@ -40,28 +42,25 @@ const closeFormModal = () => {
 
         <div class="start-due">
           <div class="start">
-            <label for="start">Start</label>
-            <!-- <input type="date"> -->
-            <Calendar v-model="date" />
+            <label for="start">Tags</label>
+            <Chips v-model="value" />
           </div>
 
           <div class="due">
-            <label for="due">Due</label>
-            <!-- <input type="date"> -->
-            <Calendar v-model="date" />
+            <label for="due">Label</label>
+            <!-- <Calendar v-model="date" /> -->
+            <Chips v-model="value" />
           </div>
 
         </div>
         <div class="start-due">
           <div class="start">
-            <label for="start">Start</label>
-            <!-- <input type="date"> -->
-            <Calendar v-model="date" />
+            <label for="priority">Priority</label>
+            <Dropdown v-model="priority" :options="cities" optionLabel="name" placeholder="select priority" class="w-full md:w-14rem" />
           </div>
 
           <div class="due">
             <label for="due">Due</label>
-            <!-- <input type="date"> -->
             <Calendar v-model="date" />
           </div>
 
@@ -218,6 +217,7 @@ label {
   border-color: #52525b;
   width: 100%;
 }
+
 </style>
 
 

@@ -33,24 +33,7 @@ const closeFormModal = () => {
         </div>
 
         <!-- deskripsi div -->
-        <div class="description-input">
-          <label for="description">Description</label>
-          <Editor id="description" v-model="value" editorStyle="height: 320px" />
-        </div>
 
-        <div class="start-due">
-          <div class="start">
-            <label for="start">Start</label>
-            <!-- <input type="date"> -->
-            <Calendar v-model="date" />
-          </div>
-
-          <div class="due">
-            <label for="due">Due</label>
-            <!-- <input type="date"> -->
-            <Calendar v-model="date" />
-          </div>
-        </div>
       </div>
 
       <div class="button-form">
@@ -95,28 +78,6 @@ const closeFormModal = () => {
   border: 1px solid #ff0000;
 }
 
-.start-due {
-  display: flex;
-  width: 100%;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 1.5rem 0rem;
-}
-
-.start {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-}
-
-.due {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-}
 
 .form-container {
   width: 100%;
