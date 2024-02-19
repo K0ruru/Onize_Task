@@ -33,39 +33,6 @@ const toggleCollapse = () => {
         </div>
       </div>
 
-      <!-- card-list -->
-      <!-- <div class="card-container"> -->
-      <!--   <div class="header"> -->
-      <!--     <h1>Welcome to Onize!</h1> -->
-      <!--   </div> -->
-
-      <!-- card-content -->
-      <!-- <Card class="card"> -->
-      <!--   <template #content> -->
-      <!--     <div class="stats-container"> -->
-
-      <!-- task-list -->
-      <!-- <div class="stats"> -->
-      <!--   <h3>Total Task</h3> -->
-      <!--   <p>120</p> -->
-      <!-- </div> -->
-      <!-- <div class="stats"> -->
-      <!--   <h3>Task Complete</h3> -->
-      <!--   <p>120</p> -->
-      <!-- </div> -->
-      <!-- <div class="stats"> -->
-      <!--   <h3>Total Task</h3> -->
-      <!--   <p>120</p> -->
-      <!-- </div> -->
-      <!-- <div class="stats"> -->
-      <!--   <h3>Total Task</h3> -->
-      <!--   <p>120</p> -->
-      <!-- </div> -->
-      <!-- end-task-list-div -->
-      <!--       </div> -->
-      <!--     </template> -->
-      <!--   </Card> -->
-      <!-- </div> -->
 
       <div class="task-container">
         <div class="task">

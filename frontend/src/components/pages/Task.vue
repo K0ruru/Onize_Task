@@ -84,7 +84,7 @@ const determineStatus = (children) => {
 
 
 // for form overlay etc
-import AddTaskForm from "../utils/AddTaskForm.vue";
+// import AddTaskForm from "../utils/AddTaskForm.vue";
 const showAddTaskForm = ref(false);
 const showAddTaskFormModal = () => {
   showAddTaskForm.value = true;
@@ -135,7 +135,7 @@ const closeDetailModal = () => {
                     <div class="task-title">{{ element.title }}</div>
                     <div class="task-deadline">
                       <i class="pi pi-circle-fill green"></i>
-                      {{ element.deadline }}
+                      {{ element.due }}
                     </div>
                   </div>
                   <div class="task-action">
@@ -157,7 +157,7 @@ const closeDetailModal = () => {
                     <div class="task-title">{{ element.title }}</div>
                     <div class="task-deadline">
                       <i class="pi pi-circle-fill green"></i>
-                      {{ element.deadline }}
+                      {{ element.due }}
                     </div>
                     <!-- Add more task details as needed -->
                   </div>
@@ -176,7 +176,7 @@ const closeDetailModal = () => {
                   <div class="task-title">{{ element.title }}</div>
                   <div class="task-deadline">
                     <i class="pi pi-circle-fill green"></i>
-                    {{ element.deadline }}
+                    {{ element.due }}
                   </div>
                   <!-- Add more task details as needed -->
                 </div>
