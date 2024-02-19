@@ -1,9 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Login from "./components/pages/Login.vue";
-import Signup from "./components/pages/Signup.vue";
-// import Dashboard from "./components/pages/Dashboard.vue";
 
 // pages
+import Login from "./components/pages/Login.vue";
+import Signup from "./components/pages/Signup.vue";
 import Dashboard from "./components/pages/Dashboard.vue";
 import Task from "./components/pages/Task.vue";
 
@@ -22,17 +21,17 @@ const routes = [
 		path: "/",
 		component: Dashboard,
 		name: "Dashboard",
-		// meta: {
-		// 	requiresAuth: true,
-		// },
+		meta: {
+			requiresAuth: true,
+		},
 	},
 	{
 		path: "/task/:id",
 		component: Task,
 		name: "Task",
-		// meta: {
-		// 	requiresAuth: true,
-		// },
+		meta: {
+			requiresAuth: true,
+		},
 	},
 ];
 
@@ -45,7 +44,7 @@ router.beforeEach((to, from, next) => {
 	const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
 
 	if (requiresAuth) {
-		const jwtToken = localStorage.getItem("jwtToken");
+		const jwtToken = localStorage.getItem("token");
 
 		if (!jwtToken) {
 			next({ name: "Login" });
