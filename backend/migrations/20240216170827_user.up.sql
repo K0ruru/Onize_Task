@@ -4,6 +4,5 @@ CREATE TABLE "user"
     name       VARCHAR NOT NULL,
     passphrase       VARCHAR NOT NULL,
     email       VARCHAR NOT NULL,
-    created_at TIMESTAMP ,
-    updated_at TIMESTAMP 
+    no_telp VARCHAR
 );

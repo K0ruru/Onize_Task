@@ -1,6 +1,6 @@
 package entity
 
-import (
+ import (
 	"time"
 )
 

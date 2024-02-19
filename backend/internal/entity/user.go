@@ -2,10 +2,11 @@ package entity
 
 // User represents a user.
 type User struct {
-	ID   string
-	Name string
+	ID         string
+	Name       string
 	Passphrase string
-	Email string
+	Email      string
+	No_telp    string
 }
 
 // GetID returns the user ID.

@@ -74,7 +74,7 @@
 
 					<Toast />
 
-					<a href="#">Don't have an account? <span>Signup</span></a>
+					<a href="/signup">Don't have an account? <span>Signup</span></a>
 					<button>Log In</button>
 				</form>
 			</div>
