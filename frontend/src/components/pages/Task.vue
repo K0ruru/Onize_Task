@@ -89,18 +89,18 @@ const onDragEnd = (event) => {
         </div>
       </div>
 
-      <div class="task-container" @click="showTaskDetailModal">
+      <div class="task-container" >
         <div class="task-card-container">
           <h2>Not Started</h2>
           <draggable v-model="notStartedTasks" group="tasks" @end="onDragEnd">
             <template #item="{ element }">
-              <div :key="element.id" class="task-card">
+              <div :key="element.id" class="task-card" @click="showTaskDetailModal">
                 <div class="task-item">
                   <div class="task-content">
                     <div class="task-title">{{ element.title }}</div>
                     <!-- <div class="task-deadline">{{ element.deadline }}</div> -->
                     <div class="task-deadline">
-                      <i class="pi pi-circle-fill green"></i>
+                      <i class="pi pi-circle-fill red"></i>
                       {{ element.deadline }}
                     </div>
                   </div>
@@ -121,7 +121,7 @@ const onDragEnd = (event) => {
                 <div class="task-content">
                   <div class="task-title">{{ element.title }}</div>
                   <div class="task-deadline">
-                    <i class="pi pi-circle-fill green"></i>
+                    <i class="pi pi-circle-fill yellow"></i>
                     {{ element.deadline }}
                   </div>
                   <!-- Add more task details as needed -->
@@ -175,7 +175,7 @@ const onDragEnd = (event) => {
 .task-card-container {
   display: flex;
   flex-direction: column;
-  margin: 0px 12px;
+  margin: 0px 20px;
   width: 30%;
   height: 100vh;
   border-right: 1px solid #222;
@@ -187,7 +187,7 @@ const onDragEnd = (event) => {
 }
 
 .task-card {
-  width: 80%;
+  width: 90%;
   border: 1px solid #222;
   border-radius: 7px;
   padding: 10px;

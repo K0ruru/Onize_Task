@@ -113,9 +113,14 @@ const closeDetailModal = () => {
 }
 
 .add-form-container {
-  background: #0b0a0b;
+  /* background: #0b0a0b; */
   /* padding: 10px; */
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  padding: 20px;
+  /* backdrop-filter: blur(10px); */
   border-radius: 8px;
+  border: 1px solid #222;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 50%;
   display: flex;
