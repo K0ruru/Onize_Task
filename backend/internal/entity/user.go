@@ -1,20 +1,27 @@
 package entity
 
 // User represents a user.
-type Users struct {
-	ID       string
-	Name     string `json:"name"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
-	No_telp  string `json:"no_telp"`
+type User struct {
+	ID         string
+	Name       string
+	Passphrase string
+	Email      string
 }
 
 // GetID returns the user ID.
-func (u Users) GetID() string {
+func (u User) GetID() string {
 	return u.ID
 }
 
 // GetName returns the user name.
-func (u Users) GetName() string {
+func (u User) GetName() string {
 	return u.Name
+}
+
+func (u User) GetPassphrase() string {
+	return u.Passphrase
+}
+
+func (u User) GetEmail() string {
+	return u.Email
 }

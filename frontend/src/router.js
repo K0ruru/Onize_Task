@@ -1,7 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
+import Login from "./components/pages/Login.vue";
+import Signup from "./components/pages/Signup.vue";
+// import Dashboard from "./components/pages/Dashboard.vue";
 
 // pages
-// pages goes here
+import Dashboard from "./components/pages/Dashboard.vue";
+import Task from "./components/pages/Task.vue";
 
 const routes = [
 	{
@@ -10,12 +14,25 @@ const routes = [
 		name: "Login",
 	},
 	{
+		path: "/signup",
+		component: Signup,
+		name: "Signup",
+	},
+	{
 		path: "/",
 		component: Dashboard,
 		name: "Dashboard",
-		meta: {
-			requiresAuth: true,
-		},
+		// meta: {
+		// 	requiresAuth: true,
+		// },
+	},
+	{
+		path: "/task",
+		component: Task,
+		name: "Task",
+		// meta: {
+		// 	requiresAuth: true,
+		// },
 	},
 ];
 

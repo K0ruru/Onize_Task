@@ -5,23 +5,25 @@ import (
 	"database/sql"
 	"flag"
 	"fmt"
-	"github.com/go-ozzo/ozzo-dbx"
-	"github.com/go-ozzo/ozzo-routing/v2"
+	"net/http"
+	"os"
+	"time"
+
+	dbx "github.com/go-ozzo/ozzo-dbx"
+	routing "github.com/go-ozzo/ozzo-routing/v2"
 	"github.com/go-ozzo/ozzo-routing/v2/content"
 	"github.com/go-ozzo/ozzo-routing/v2/cors"
 	_ "github.com/lib/pq"
 	"github.com/qiangxue/go-rest-api/internal/album"
-  "github.com/qiangxue/go-rest-api/internal/user"
 	"github.com/qiangxue/go-rest-api/internal/auth"
 	"github.com/qiangxue/go-rest-api/internal/config"
 	"github.com/qiangxue/go-rest-api/internal/errors"
 	"github.com/qiangxue/go-rest-api/internal/healthcheck"
+	"github.com/qiangxue/go-rest-api/internal/project"
+	"github.com/qiangxue/go-rest-api/internal/tasks"
 	"github.com/qiangxue/go-rest-api/pkg/accesslog"
 	"github.com/qiangxue/go-rest-api/pkg/dbcontext"
 	"github.com/qiangxue/go-rest-api/pkg/log"
-	"net/http"
-	"os"
-	"time"
 )
 
 // Version indicates the current version of the application.
@@ -71,6 +73,7 @@ func main() {
 	}
 }
 
+// buildHandler sets up the HTTP routing and builds an HTTP handler.
 func buildHandler(logger log.Logger, db *dbcontext.DB, cfg *config.Config) http.Handler {
 	router := routing.New()
 
@@ -82,28 +85,32 @@ func buildHandler(logger log.Logger, db *dbcontext.DB, cfg *config.Config) http.
 	)
 
 	healthcheck.RegisterHandlers(router, Version)
+	var repository auth.Repository = auth.NewRepo(db, logger)
 
-	rg := router.Group("/v1")
+	rg := router.Group("/onize")
 
-	// Create an instance of your repository
-	authRepo := auth.NewRepository(db, logger)
 	authHandler := auth.Handler(cfg.JWTSigningKey)
-
-	// Pass the authRepo instance when initializing the authentication service
-	auth.RegisterHandlers(rg.Group(""),
-		auth.NewService(authRepo, cfg.JWTSigningKey, cfg.JWTExpiration, logger),
-		logger,
-	)
-
-	user.RegisterHandlers(rg.Group(""),
-		user.NewService(user.NewRepository(db, logger), logger),
-		authHandler, logger,
-	)
 
 	album.RegisterHandlers(rg.Group(""),
 		album.NewService(album.NewRepository(db, logger), logger),
 		authHandler, logger,
 	)
+
+	auth.RegisterHandlers(rg.Group(""),
+    auth.NewService(cfg.JWTSigningKey, cfg.JWTExpiration, logger, repository),
+    logger,
+	)
+
+	project.RegisterHandlers(rg.Group(""),
+	project.NewService(project.NewRepo(db, logger), logger),
+	authHandler, logger,
+	)
+
+	tasks.RegisterHandlers(rg.Group(""),
+	tasks.NewService(tasks.NewRepo(db, logger), logger),
+	authHandler, logger,
+	)
+
 
 	return router
 }
