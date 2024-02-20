@@ -6,6 +6,20 @@ import "primeicons/primeicons.css";
 import NavbarTop from "../utils/NavbarTop.vue";
 import AddProjectForm from "../utils/AddProjectForm.vue";
 
+const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+	//get token
+    const parts = value.split(`; ${name}=`);
+     if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+	const token = getCookie("token");
+	if (token) {
+    // Token tersedia, lakukan sesuatu dengan token ini
+    console.log("Token nya bisa aa",);
+   } else {
+    console.error("Token not found in the cookie");
+   }
+
 // const showAddTaskForm = ref(false);
 // const showAddTaskFormModal = () => {
 // 	showAddTaskForm.value = !showAddTaskForm.value;

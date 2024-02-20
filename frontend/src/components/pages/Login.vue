@@ -14,6 +14,20 @@
 
 	const Email = ref("");
 	const Passphrase = ref("");
+	
+// 	const getCookie = (name) => {
+//     const value = `; ${document.cookie}`;
+// 	//get token
+//     const parts = value.split(`; ${name}=`);
+//      if (parts.length === 2) return parts.pop().split(';').shift();
+//     }
+// 	const token = getCookie("token");
+// 	if (token) {
+//     // Token tersedia, lakukan sesuatu dengan token ini
+//     console.log("Token nya bisa aa",);
+//    } else {
+//     console.error("Token not found in the cookie");
+//    }    
 
 	const login = async () => {
 		try {
@@ -28,9 +42,10 @@
 				const decoded = jwtDecode(token);
 
 				const userID = decoded.id;
+				document.cookie = `token=${token}; max-age=86400; path=/`;
 
-				localStorage.setItem("token", token);
-				localStorage.setItem("userID", userID);
+				// localStorage.setItem("token", token);
+				// localStorage.setItem("userID", userID);
 				router.push("/");
 			} else {
 				console.error("Token not received in the response");

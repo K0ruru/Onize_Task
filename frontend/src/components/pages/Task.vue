@@ -4,6 +4,19 @@ import { ref } from "vue";
 import "primeicons/primeicons.css";
 import NavbarTop from "../utils/NavbarTop.vue";
 
+const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+	//get token
+    const parts = value.split(`; ${name}=`);
+     if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+	const token = getCookie("token");
+	if (token) {
+    // Token tersedia, lakukan sesuatu dengan token ini
+    console.log("Token nya bisa aa",);
+   } else {
+    console.error("Token not found in the cookie");
+   }
 
 // for add form task
 import AddTaskForm from "../utils/AddTaskForm.vue";
