@@ -1,4 +1,3 @@
-
 <script setup>
 import Navbar from "../utils/Navbar.vue";
 import { ref } from "vue";
@@ -7,18 +6,18 @@ import NavbarTop from "../utils/NavbarTop.vue";
 import AddProjectForm from "../utils/AddProjectForm.vue";
 
 const getCookie = (name) => {
-    const value = `; ${document.cookie}`;
-	//get token
-    const parts = value.split(`; ${name}=`);
-     if (parts.length === 2) return parts.pop().split(';').shift();
-    }
-	const token = getCookie("token");
-	if (token) {
-    // Token tersedia, lakukan sesuatu dengan token ini
-    console.log("Token nya bisa aa",);
-   } else {
-    console.error("Token not found in the cookie");
-   }
+  const value = `; ${document.cookie}`;
+  //get token
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(";").shift();
+};
+const token = getCookie("token");
+if (token) {
+  // Token tersedia, lakukan sesuatu dengan token ini
+  console.log("Token nya bisa aa");
+} else {
+  console.error("Token not found in the cookie");
+}
 
 // const showAddTaskForm = ref(false);
 // const showAddTaskFormModal = () => {
@@ -45,15 +44,21 @@ const isCollapsed = ref(false);
 const toggleCollapse = () => {
   isCollapsed.value = !isCollapsed.value;
 };
-
 </script>
 
 <template>
   <div v-if="showAddTaskForm" class="overlay" @click="closeFormModal"></div>
-  <AddProjectForm @click="closeFormModal" v-if="showAddTaskForm" :class="{ 'fade-scale-in': showAddTaskForm }" />
+  <AddProjectForm
+    @click="closeFormModal"
+    v-if="showAddTaskForm"
+    :class="{ 'fade-scale-in': showAddTaskForm }"
+  />
   <div class="container">
     <Navbar :isCollapsed="isCollapsed" @toggleCollapse="toggleCollapse" />
-    <div class="dashboard-content" :style="{ marginLeft: isCollapsed ? '80px' : '247px' }">
+    <div
+      class="dashboard-content"
+      :style="{ marginLeft: isCollapsed ? '80px' : '247px' }"
+    >
       <NavbarTop />
       <!-- navbar-top -->
       <div class="nav-top">

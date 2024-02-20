@@ -5,18 +5,18 @@ import "primeicons/primeicons.css";
 import NavbarTop from "../utils/NavbarTop.vue";
 
 const getCookie = (name) => {
-    const value = `; ${document.cookie}`;
-	//get token
-    const parts = value.split(`; ${name}=`);
-     if (parts.length === 2) return parts.pop().split(';').shift();
-    }
-	const token = getCookie("token");
-	if (token) {
-    // Token tersedia, lakukan sesuatu dengan token ini
-    console.log("Token nya bisa aa",);
-   } else {
-    console.error("Token not found in the cookie");
-   }
+  const value = `; ${document.cookie}`;
+  //get token
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(";").shift();
+};
+const token = getCookie("token");
+if (token) {
+  // Token tersedia, lakukan sesuatu dengan token ini
+  console.log("Token nya bisa aa");
+} else {
+  console.error("Token not found in the cookie");
+}
 
 // for add form task
 import AddTaskForm from "../utils/AddTaskForm.vue";
@@ -31,8 +31,7 @@ const isCollapsed = ref(false);
 const toggleCollapse = () => {
   isCollapsed.value = !isCollapsed.value;
 };
-// end 
-
+// end
 
 import TaskDetail from "../utils/TaskDetail.vue";
 const showTaskDetail = ref(false);
@@ -42,7 +41,6 @@ const showTaskDetailModal = () => {
 const closeDetailModal = () => {
   showTaskDetail.value = false;
 };
-
 
 // for dragabale
 import draggable from "vuedraggable";
@@ -85,14 +83,25 @@ const onDragEnd = (event) => {
 <template>
   <!-- add task -->
   <div v-if="showAddTaskForm" class="overlay" @click="closeFormModal"></div>
-  <AddTaskForm @click="closeFormModal" v-if="showAddTaskForm" :class="{ 'fade-scale-in': showAddTaskForm }" />
+  <AddTaskForm
+    @click="closeFormModal"
+    v-if="showAddTaskForm"
+    :class="{ 'fade-scale-in': showAddTaskForm }"
+  />
 
   <div v-if="showTaskDetail" class="overlay" @click="closeDetailModal"></div>
-  <TaskDetail @click="closeDetailModal" v-if="showTaskDetail" :class="{ 'fade-scale-in': showTaskDetail }" />
+  <TaskDetail
+    @click="closeDetailModal"
+    v-if="showTaskDetail"
+    :class="{ 'fade-scale-in': showTaskDetail }"
+  />
 
   <div class="container" :class="{ 'collapsed-container': isCollapsed }">
     <Navbar :isCollapsed="isCollapsed" @toggleCollapse="toggleCollapse" />
-    <div class="dashboard-content" :style="{ marginLeft: isCollapsed ? '80px' : '247px' }">
+    <div
+      class="dashboard-content"
+      :style="{ marginLeft: isCollapsed ? '80px' : '247px' }"
+    >
       <NavbarTop />
       <!-- navbar-top -->
       <div class="nav-top">
@@ -102,12 +111,16 @@ const onDragEnd = (event) => {
         </div>
       </div>
 
-      <div class="task-container" >
+      <div class="task-container">
         <div class="task-card-container">
           <h2>Not Started</h2>
           <draggable v-model="notStartedTasks" group="tasks" @end="onDragEnd">
             <template #item="{ element }">
-              <div :key="element.id" class="task-card" @click="showTaskDetailModal">
+              <div
+                :key="element.id"
+                class="task-card"
+                @click="showTaskDetailModal"
+              >
                 <div class="task-item">
                   <div class="task-content">
                     <div class="task-title">{{ element.title }}</div>

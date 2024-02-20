@@ -1,38 +1,45 @@
 <script setup>
-import InputText from 'primevue/inputtext';
-import axios from 'axios';
+import InputText from "primevue/inputtext";
+import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-const name = ref('');
-const email = ref('');
-const no_telp = ref('');
-const passphrase = ref('');
+const name = ref("");
+const email = ref("");
+const no_telp = ref("");
+const passphrase = ref("");
 
-const SignUp = async() => {
-  
-  const response = await axios.post("http://localhost:8080/onize/signup", {
-    name: name.value,
-    email: email.value,
-    no_telp: no_telp.value,
-    passphrase: passphrase.value,
-  })
+const SignUp = async () => {
+  try {
+    const response = await axios.post("http://localhost:8080/onize/signup", {
+      name: name.value,
+      email: email.value,
+      no_telp: no_telp.value,
+      passphrase: passphrase.value,
+    });
 
-  console.log(response)
-  const token = response.data.token
+    const token = response.data.token;
 
-  if(token) {
-    const decoded = jwtDecode(token)
+    if (token) {
+      const decoded = jwtDecode(token);
+      const userID = decoded.id;
 
-    const userID = decoded.id
+      // Simpan token dalam cookie dengan masa berlaku 1 hari
+      document.cookie = `token=${token}; max-age=86400; path=/`;
 
-    localStorage.setItem('token', token)
-    localStorage.setItem('userID', userID)
+      // Simpan ID pengguna dalam local storage
+      localStorage.setItem("userID", userID);
 
-    router.push("/")
+      router.push("/");
+    } else {
+      console.error("Token not received in the response");
+    }
+  } catch (err) {
+    console.error(err);
+    // Handle errors, e.g., show toast message
   }
 };
 </script>
@@ -45,28 +52,44 @@ const SignUp = async() => {
         <!-- <input type="email" placeholder="Email" /> -->
         <!-- <input type="password" placeholder="Password" /> -->
         <div class="form-input-container">
-
           <div class="left-side">
             <div class="form-input">
-              <InputText id="username" v-model="name" aria-describedby="username-help" placeholder="Username" />
+              <InputText
+                id="username"
+                v-model="name"
+                aria-describedby="username-help"
+                placeholder="Username"
+              />
             </div>
             <div class="form-input">
-              <InputText id="email" v-model="email" aria-describedby="email-help" placeholder="Email" />
+              <InputText
+                id="email"
+                v-model="email"
+                aria-describedby="email-help"
+                placeholder="Email"
+              />
             </div>
           </div>
 
           <div class="left-side">
             <div class="form-input">
-              <InputText id="username" v-model="no_telp" aria-describedby="username-help" placeholder="No Tlpn" />
+              <InputText
+                id="username"
+                v-model="no_telp"
+                aria-describedby="username-help"
+                placeholder="No Tlpn"
+              />
             </div>
             <div class="form-input">
-              <InputText id="username" v-model="passphrase" aria-describedby="username-help" placeholder="Password" />
+              <InputText
+                id="username"
+                v-model="passphrase"
+                aria-describedby="username-help"
+                placeholder="Password"
+              />
             </div>
           </div>
-
         </div>
-
-
 
         <a href="/login">have an account? <span>Login</span></a>
         <button type="submit">Signup</button>
@@ -105,7 +128,6 @@ const SignUp = async() => {
   align-items: center;
 }
 
-
 h1 {
   font-weight: 450;
 }
@@ -134,7 +156,7 @@ button {
   border-radius: 7px;
   border: 1px solid #6427aa;
   background-color: #6427aa;
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 12px;
   font-weight: 400;
   padding: 12px 45px;
@@ -173,7 +195,7 @@ form {
   max-width: 100%;
   min-height: 480px;
   display: flex;
-  align-items: center ;
+  align-items: center;
   justify-content: center;
 }
 
@@ -189,7 +211,6 @@ form {
   z-index: 2;
 }
 
-
 .overlay-container {
   position: absolute;
   top: 0;
@@ -198,7 +219,6 @@ form {
   height: 100%;
 }
 
-
 .overlay {
   background: #000000;
   background: -webkit-linear-gradient(to right, #6427aa, #340f5e);
@@ -206,7 +226,7 @@ form {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0 0;
-  color: #FFFFFF;
+  color: #ffffff;
   position: relative;
   left: -100%;
   height: 100%;
@@ -226,10 +246,7 @@ form {
   width: 50%;
 }
 
-
 .overlay-right {
   right: 0;
 }
 </style>
-
-
