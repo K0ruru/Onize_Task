@@ -33,6 +33,7 @@
 			);
 
 			console.log("project added");
+			window.location.reload();
 		} catch (err) {
 			console.log(err);
 		}

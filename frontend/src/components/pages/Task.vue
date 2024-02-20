@@ -1,53 +1,98 @@
 <script setup>
 	import Navbar from "../utils/Navbar.vue";
-	import { ref, onMounted, toRefs } from "vue";
+	import { ref, onMounted } from "vue";
+	import { useRoute } from "vue-router";
 	import axios from "axios";
 	import "primeicons/primeicons.css";
 	import NavbarTop from "../utils/NavbarTop.vue";
-	import AddProjectForm from "../utils/AddProjectForm.vue";
+	import draggable from "vuedraggable";
 
-	const showAddTaskForm = ref(false);
+	// const showAddTaskForm = ref(false);
+	const route = useRoute();
 	const isCollapsed = ref(false);
-
-	const projects = ref({
-		project: [],
-	});
-
-	const { project } = toRefs(projects);
-
-	const showAddTaskFormModal = () => {
-		showAddTaskForm.value = true;
-	};
-
-	const closeFormModal = () => {
-		showAddTaskForm.value = false;
-	};
+	const notStartedTasks = ref([]);
+	const inProgressTasks = ref([]);
+	const doneTasks = ref([]);
 
 	const toggleCollapse = () => {
 		isCollapsed.value = !isCollapsed.value;
 	};
 
-	const dataProject = async () => {
-		const token = localStorage.getItem("token");
-		const user_id = localStorage.getItem("userID");
-
-		const headers = {
-			Authorization: `Bearer ${token}`,
-			"Content-Type": "application/json",
-		};
-
+	onMounted(async () => {
 		try {
+			const project_id = route.params.id;
+
 			const res = await axios.get(
-				`http://localhost:8080/onize/projects/user/${user_id}`
+				`http://localhost:8080/onize/tasks/project/${project_id}`
 			);
 
-			projects.value.project = res.data;
+			notStartedTasks.value = res.data.filter(
+				(task) => task.status === "not started"
+			);
+			inProgressTasks.value = res.data.filter(
+				(task) => task.status === "in progress"
+			);
+			doneTasks.value = res.data.filter((task) => task.status === "completed");
 		} catch (err) {
 			console.log(err);
 		}
+	});
+
+	const headers = {
+		Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDg1ODQzNjUsImlkIjoiYTQ1Nzk5MzAtZWRmZi00NWM5LTkyZmQtMDMxM2UwZDAwYTliIiwibmFtZSI6Ik51cmZhaXogUWFsYmkifQ.vmjjy9I33S8g27ZmiGwUYQcqB2MRUeOY88KuX3vTQn8`,
+		"Content-Type": "application/json",
 	};
 
-	onMounted(dataProject);
+	const onDragEnd = async (event) => {
+		const draggedTask = event.item;
+		const taskId = draggedTask.getAttribute("data-task-id");
+
+		// Determine the new status based on the task's position in the container
+		const newStatus = determineStatus(event.to.children);
+		console.log(newStatus);
+
+		const statusAsString = String(newStatus);
+
+		// Make the axios.put request
+		try {
+			const res = await axios.put(
+				`http://localhost:8080/onize/tasks/status/${taskId}`,
+				{
+					status: statusAsString,
+				},
+				{ headers }
+			);
+			console.log(res.data); // Assuming the response contains relevant data
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
+	// Function to determine the status based on the task's position
+	const determineStatus = (children) => {
+		if (children.length > 0) {
+			return children[0].getAttribute("data-status");
+		}
+		return "fallbackStatus"; // Default status if needed
+	};
+
+	// for form overlay etc
+	// import AddTaskForm from "../utils/AddTaskForm.vue";
+	const showAddTaskForm = ref(false);
+	const showAddTaskFormModal = () => {
+		showAddTaskForm.value = true;
+	};
+	const closeFormModal = () => {
+		showAddTaskForm.value = false;
+	};
+	import TaskDetail from "../utils/TaskDetail.vue";
+	const showTaskDetail = ref(false);
+	const showTaskDetailModal = () => {
+		showTaskDetail.value = true;
+	};
+	const closeDetailModal = () => {
+		showTaskDetail.value = false;
+	};
 </script>
 
 <template>
