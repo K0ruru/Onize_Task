@@ -2,6 +2,7 @@ package auth
 
 import (
 	"context"
+	"database/sql"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -71,34 +72,47 @@ func NewService(signingKey string, tokenExpiration int, logger log.Logger, repo 
 }
 
 func (s *service) SignUp(ctx context.Context, req CreateUser) (string, error) {
-	if err := req.Validate(); err != nil {
-		return "", err
-	}
-	id := entity.GenerateID()
+    if err := req.Validate(); err != nil {
+        return "", err
+    }
 
-	hashedPassphrase, err := bcrypt.GenerateFromPassword([]byte(req.Passphrase), bcrypt.DefaultCost)
-	if err != nil {
-		return "", err
-	}
+    // Check if the email already exists in the database
+    existingUser, err := s.repo.GetByEmailAndPassword(ctx, req.Email, req.Passphrase)
+    if err != nil && err != sql.ErrNoRows {
+        // If an error occurs other than sql.ErrNoRows, return the error
+        return "", err
+    }
+    if existingUser.ID != "" {
+        // If a user with the same email already exists, return a "bad request" error
+        return "", errors.BadRequest("email has already been used")
+    }
 
-	err = s.repo.Create(ctx, entity.User{
-		ID:         id,
-		Name:       req.Name,
-		Passphrase: string(hashedPassphrase),
-		Email:      req.Email,
-		No_telp:    req.No_telp,
-	})
+    id := entity.GenerateID()
 
-	if err != nil {
-		return "", err
-	}
-	return s.generateJWT(User{User: entity.User{
-		ID:         id,
-		Name:       req.Name,
-		Passphrase: string(hashedPassphrase),
-		Email:      req.Email,
-	}})
+    hashedPassphrase, err := bcrypt.GenerateFromPassword([]byte(req.Passphrase), bcrypt.DefaultCost)
+    if err != nil {
+        return "", err
+    }
+
+    err = s.repo.Create(ctx, entity.User{
+        ID:         id,
+        Name:       req.Name,
+        Passphrase: string(hashedPassphrase),
+        Email:      req.Email,
+        No_telp:    req.No_telp,
+    })
+
+    if err != nil {
+        return "", err
+    }
+    return s.generateJWT(User{User: entity.User{
+        ID:         id,
+        Name:       req.Name,
+        Passphrase: string(hashedPassphrase),
+        Email:      req.Email,
+    }})
 }
+
 
 func (s *service) Login(ctx context.Context, loginReq LoginUser) (string, error) {
 	user, err := s.authenticate(ctx, loginReq)
