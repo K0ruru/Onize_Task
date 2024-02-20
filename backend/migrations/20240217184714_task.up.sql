@@ -17,11 +17,11 @@ CREATE TABLE task (
     id          VARCHAR PRIMARY KEY,
     title       VARCHAR NOT NULL,
     task_desc   VARCHAR NOT NULL,
-    label       VARCHAR NOT NULL,
+    label       VARCHAR[] NOT NULL,
     priority    priority_enum NOT NULL,
     status      status_enum DEFAULT 'not started',
-    tags        VARCHAR,
-    project_id     VARCHAR REFERENCES project(id),
+    tags        VARCHAR[],
+    project_id  VARCHAR REFERENCES project(id),
     created_at  TIMESTAMP NOT NULL,
     due         TIMESTAMP
 );

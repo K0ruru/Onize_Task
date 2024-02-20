@@ -66,8 +66,13 @@
 				</div>
 			</div>
 
-			<div class="task-container" v-for="project in projects" :key="project.id">
-				<!-- Your task content here -->
+			<router-link
+				:to="{ name: 'Task', params: { id: project.id } }"
+				class="task-container"
+				v-for="project in projects"
+				:key="project.id"
+				style="text-decoration: none; color: inherit"
+			>
 				<div class="task">
 					<div class="top-task">
 						<div class="task-judul">
@@ -86,7 +91,7 @@
 						<p>Study</p>
 					</div>
 				</div>
-			</div>
+			</router-link>
 		</div>
 	</div>
 </template>

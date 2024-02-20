@@ -16,9 +16,9 @@ type Task struct {
 type CreateTask struct {
 	Title      string    `json:"title"`
 	Task_desc  string    `json:"task_desc"`
-	Label      string    `json:"label"`
+	Label      []string    `json:"label"`
 	Priority   string    `json:"priority"`
-	Tags       string    `json:"tags"`
+	Tags       []string    `json:"tags"`
 	Project_id string    `json:"project_id"`
 	Status     string    `json:"status" default:"not started"`
 	Due        time.Time `json:"due"`
@@ -27,9 +27,9 @@ type CreateTask struct {
 type UpdateTask struct {
 	Title     string    `json:"title"`
 	Task_desc string    `json:"task_desc"`
-	Label     string    `json:"label"`
+	Label     []string    `json:"label"`
 	Priority  string    `json:"priority"`
-	Tags      string    `json:"tags"`
+	Tags      []string    `json:"tags"`
 	Due       time.Time `json:"due"`
 }
 
@@ -139,20 +139,21 @@ func (s service) Create(ctx context.Context, input CreateTask) (Task, error) {
 
 	if input.Status == "" {
 		input.Status = "not started"
-}
+	}
+
 
 	err := s.repo.Create(ctx, entity.Task{
-		ID: id,
-		Title: input.Title,
-		Task_desc: input.Task_desc,
-		Label: input.Label,
-		Priority: input.Priority,
-		Status: input.Status,
-		Tags: input.Tags,
-		Project_id: input.Project_id,
-		CreatedAt: time,
-		Due: input.Due,
-	})
+    ID:         id,
+    Title:      input.Title,
+    Task_desc:  input.Task_desc,
+    Label:      input.Label,
+    Priority:   input.Priority,
+    Status:     input.Status,
+    Tags:       input.Tags,
+    Project_id: input.Project_id,
+    CreatedAt:  time,
+    Due:        input.Due,
+})
 
 	if err != nil {
 		return Task{}, err
