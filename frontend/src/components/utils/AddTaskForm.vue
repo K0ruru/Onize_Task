@@ -100,13 +100,13 @@
 				<div class="start-due">
 					<div class="start">
 						<label for="start">Tags</label>
-						<Chips v-model="Tags" />
+						<Chips class="p-fluid" v-model="Tags" />
 					</div>
 
 					<div class="due">
 						<label for="due">Label</label>
 						<!-- <Calendar v-model="date" /> -->
-						<Chips v-model="Label" />
+						<Chips class="p-fluid" v-model="Label" />
 					</div>
 				</div>
 				<div class="start-due">
