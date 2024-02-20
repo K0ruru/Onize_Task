@@ -1,12 +1,45 @@
 <script setup>
 	import InputText from "primevue/inputtext";
 	import Password from "primevue/password";
+	import { ref } from "vue";
+	import { useRouter } from "vue-router";
+	import { jwtDecode } from "jwt-decode";
+	import axios from "axios";
+
+	const router = useRouter();
+
+	const Email = ref("");
+	const Passphrase = ref("");
+	const Username = ref("");
+	const NoTelp = ref("");
+
+	const signUp = async () => {
+		try {
+			const res = await axios.post("http://localhost:8080/onize/signup", {
+				name: Username.value,
+				passphrase: Passphrase.value,
+				email: Email.value,
+				no_telp: NoTelp.value,
+			});
+
+			const token = res.data.token;
+			const decoded = jwtDecode(token);
+			const UserID = decoded.id;
+
+			localStorage.setItem("token", token);
+			localStorage.setItem("userID", UserID);
+
+			router.push("/");
+		} catch (err) {
+			console.log(err);
+		}
+	};
 </script>
 <template>
 	<div class="container-center">
 		<div class="container" id="container">
 			<!-- <div class="form-container log-in-container"> -->
-			<form action="#">
+			<form @submit.prevent="signUp">
 				<h1 class="login-header">Signup</h1>
 				<!-- <input type="email" placeholder="Email" /> -->
 				<!-- <input type="password" placeholder="Password" /> -->
@@ -15,7 +48,7 @@
 						<div class="form-input">
 							<InputText
 								id="username"
-								v-model="value"
+								v-model="Username"
 								aria-describedby="username-help"
 								placeholder="Username"
 							/>
@@ -23,7 +56,7 @@
 						<div class="form-input">
 							<InputText
 								id="email"
-								v-model="value"
+								v-model="Email"
 								aria-describedby="email-help"
 								placeholder="Email"
 							/>
@@ -33,8 +66,8 @@
 					<div class="left-side">
 						<div class="form-input">
 							<InputText
-								id="username"
-								v-model="value"
+								id="no-telp"
+								v-model="NoTelp"
 								aria-describedby="username-help"
 								placeholder="No Tlpn"
 							/>
@@ -51,7 +84,7 @@
 				</div>
 
 				<a href="/login">have an account? <span>Login</span></a>
-				<button>Signup</button>
+				<button input="submit">Signup</button>
 			</form>
 			<!-- </div> -->
 			<!-- <div class="overlay-container"> -->
