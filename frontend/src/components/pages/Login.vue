@@ -7,6 +7,7 @@
 	import InputText from "primevue/inputtext";
 	import Password from "primevue/password";
 	import Toast from "primevue/toast";
+	import { jwtDecode } from "jwt-decode";
 	import { useToast } from "primevue/usetoast";
 
 	// plugins
@@ -19,7 +20,7 @@
 
 	const login = async () => {
 		try {
-			const res = await axios.post("http://localhost:8080/v1/login", {
+			const res = await axios.post("http://localhost:8080/onize/login", {
 				email: Email.value,
 				passphrase: Passphrase.value,
 			});
@@ -27,7 +28,12 @@
 			const token = res.data.token;
 
 			if (token) {
+				const decoded = jwtDecode(token);
+				const userID = decoded.id;
+
 				localStorage.setItem("token", token);
+				localStorage.setItem("userID", userID);
+
 				router.push("/");
 			} else {
 				console.error("Token not received in the response");

@@ -2,6 +2,8 @@
 import InputText from 'primevue/inputtext';
 import Editor from 'primevue/editor';
 import Calendar from 'primevue/calendar';
+import Chips from 'primevue/chips';
+import Dropdown from 'primevue/dropdown';
 import { defineEmits } from "vue";
 const emits = defineEmits(["closeFormModal"]);
 
@@ -40,16 +42,28 @@ const closeFormModal = () => {
 
         <div class="start-due">
           <div class="start">
-            <label for="start">Start</label>
-            <!-- <input type="date"> -->
-            <Calendar v-model="date" />
+            <label for="start">Tags</label>
+            <Chips v-model="value" />
+          </div>
+
+          <div class="due">
+            <label for="due">Label</label>
+            <!-- <Calendar v-model="date" /> -->
+            <Chips v-model="value" />
+          </div>
+
+        </div>
+        <div class="start-due">
+          <div class="start">
+            <label for="priority">Priority</label>
+            <Dropdown v-model="priority" :options="cities" optionLabel="name" placeholder="select priority" class="w-full md:w-14rem" />
           </div>
 
           <div class="due">
             <label for="due">Due</label>
-            <!-- <input type="date"> -->
             <Calendar v-model="date" />
           </div>
+
         </div>
       </div>
 
@@ -79,6 +93,7 @@ const closeFormModal = () => {
   border-radius: 5px;
   transition: all 0.2s;
 }
+
 .button-form .button-save:hover {
   background: #6430ab;
 }
@@ -91,6 +106,7 @@ const closeFormModal = () => {
   border-radius: 5px;
   transition: all 0.2s;
 }
+
 .button-form .button-cencel:hover {
   border: 1px solid #ff0000;
 }
@@ -101,7 +117,7 @@ const closeFormModal = () => {
   justify-content: flex-start;
   align-items: center;
   gap: 1.5rem;
-  padding: 1.5rem 0rem;
+  padding-top: 1.4rem;
 }
 
 .start {
@@ -201,6 +217,8 @@ label {
   border-color: #52525b;
   width: 100%;
 }
+
 </style>
+
 
 

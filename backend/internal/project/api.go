@@ -19,6 +19,7 @@ func RegisterHandlers(r *routing.RouteGroup, service Service, authHandler routin
 
 	r.Get("/projects/<id>", res.get)
 	r.Get("/projects", res.query)
+	r.Get("/projects/user/<id>", res.get_by_user)
 
 
 	r.Use(authHandler)
@@ -44,6 +45,17 @@ func (r resource) query(c *routing.Context) error {
 	ctx := c.Request.Context()
 
 	projects, err := r.service.Querry(ctx)
+	if err != nil {
+			return err
+	}
+
+	return c.Write(projects)
+}
+
+func (r resource) get_by_user(c *routing.Context) error {
+	ctx := c.Request.Context()
+
+	projects, err := r.service.GetByUser(ctx, c.Param("id"))
 	if err != nil {
 			return err
 	}
